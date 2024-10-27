@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agrupador de Alumnos</title>
+</head>
+<body>
+    <h2>Aplicación para Agrupar Alumnos</h2>
+    <input type="text" id="nombreAlumno" placeholder="Introduce el nombre del alumno">
+    <button onclick="agregarAlumno()">Agregar Alumno</button>
+    <button onclick="finalizarIngreso()">Finalizar</button>
+
+    <h3>Alumnos registrados:</h3>
+    <ul id="listaAlumnos"></ul>
+
+    <h3>Grupos:</h3>
+    <ul id="listaGrupos"></ul>
+
+    <script>
+        // Variables globales
+        let alumnos = new Set(); // Para evitar nombres duplicados
+
+        // Función para agregar alumno
+        function agregarAlumno() {
+            const nombre = document.getElementById("nombreAlumno").value.trim();
+            if (nombre.toLowerCase() === "fin") {
+                finalizarIngreso();
+                return;
+            }
+            
+            if (nombre === "") {
+                alert("Por favor, ingresa un nombre.");
+                return;
+            }
+            
+            if (alumnos.has(nombre)) {
+                alert("El nombre ya está registrado. Introduce otro.");
+            } else {
+                alumnos.add(nombre);
+                mostrarAlumnos();
+            }
+            
+            document.getElementById("nombreAlumno").value = "";
+        }
+
+        // Muestra los alumnos en la lista de HTML
+        function mostrarAlumnos() {
+            const lista = document.getElementById("listaAlumnos");
+            lista.innerHTML = "";
+            alumnos.forEach(nombre => {
+                const li = document.createElement("li");
+                li.textContent = nombre;
+                lista.appendChild(li);
+            });
+        }
+
+        // Finalizar el ingreso de alumnos y agruparlos
+        function finalizarIngreso() {
+            if (alumnos.size === 0) {
+                alert("No hay alumnos registrados.");
+                return;
+            }
+            
+            const listaAlumnos = Array.from(alumnos);
+            listaAlumnos.sort(() => Math.random() - 0.5); // Orden aleatorio
+
+            // Agrupamiento de alumnos
+            const grupos = [];
+            while (listaAlumnos.length > 0) {
+                let grupo = listaAlumnos.splice(0, 3);
+                grupos.push(grupo);
+            }
+
+            // Distribuir alumnos sobrantes si hay
+            if (grupos[grupos.length - 1].length < 3) {
+                let ultimoGrupo = grupos.pop(); // Extraemos el último grupo con menos de 3
+                for (let i = 0; i < ultimoGrupo.length; i++) {
+                    grupos[i % grupos.length].push(ultimoGrupo[i]);
+                }
+            }
+            
+            mostrarGrupos(grupos);
+        }
+
+        // Mostrar grupos en la lista de HTML
+        function mostrarGrupos(grupos) {
+            const listaGrupos = document.getElementById("listaGrupos");
+            listaGrupos.innerHTML = "";
+            grupos.forEach((grupo, index) => {
+                const li = document.createElement("li");
+                li.textContent = `Grupo ${index + 1}: ${grupo.join(", ")}`;
+                listaGrupos.appendChild(li);
+            });
+        }
+    </script>
+</body>
+</html>
