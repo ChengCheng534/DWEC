@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cifrado César</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f9;
+            margin: 0;
+        }
+        h1 {
+            color: #333;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 1em;
+            width: 300px;
+        }
+        label {
+            font-size: 1.1em;
+        }
+        input, textarea, button {
+            padding: 0.5em;
+            font-size: 1em;
+            width: 100%;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .output {
+            margin-top: 1em;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Cifrado César</h1>
+    <div class="container">
+        <label for="texto">Texto a cifrar:</label>
+        <textarea id="texto" rows="4" placeholder="Escribe el texto aquí"></textarea>
+
+        <label for="clave">Clave (número de desplazamiento):</label>
+        <input type="number" id="clave" placeholder="Ingresa la clave" />
+
+        <button onclick="cifrarTexto()">Cifrar</button>
+
+        <div class="output">
+            <p>Texto cifrado:</p>
+            <p id="resultado"></p>
+        </div>
+    </div>
+
+    <script>
+        function cifrarTexto() {
+            const texto = document.getElementById("texto").value;
+            const clave = parseInt(document.getElementById("clave").value);
+            let textoCifrado = "";
+
+            if (isNaN(clave)) {
+                alert("Por favor, ingresa una clave válida.");
+                return;
+            }
+
+            for (let i = 0; i < texto.length; i++) {
+                const codigoUnicode = texto.charCodeAt(i);
+                const codigoCifrado = codigoUnicode + clave;
+                textoCifrado += String.fromCharCode(codigoCifrado);
+            }
+
+            document.getElementById("resultado").textContent = textoCifrado;
+        }
+    </script>
+
+</body>
+</html>

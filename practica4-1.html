@@ -7,12 +7,29 @@
 </head>
 <body>
     <script>
-        let letra = prompt("Introduce una letra:");
-        let num;
+        let texto = prompt("Introduce la letra que quiere cifrar: ");
+        let num = prompt("Introduce un número: ");
 
-        while (le) {
-            
+        // Validamos si num es un número, si no, pedimos otro valor
+        while (isNaN(Number(num))) {
+            alert("No es un número válido.");
+            num = prompt("Introduce un número: ");
         }
+
+        // Convertimos num a número para poder usarlo en las operaciones
+        num = Number(num);
+
+        // Declaramos las variables para cifrar el texto
+        let letraCifrado= "";
+        let codigo, cifrar;
+
+        // Recorremos el texto y aplicamos el cifrado
+        for (let i = 0; i < texto.length; i++) {
+            codigo = texto.charCodeAt(i); // numero en la tabla unicode de la letra
+            cifrar = codigo + num;  // Suma el número para cifrar
+            letraCifrado += String.fromCharCode(cifrar); // Concatenamos al texto cifrado
+        }
+        alert("La resultado es: " + letraCifrado);
 
     </script>
 </body>
