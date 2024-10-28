@@ -30,12 +30,12 @@
             }
             
             if (nombre === "") {
-                alert("Por favor, ingresa un nombre.");
+                alert("Ingresa un nombre.");
                 return;
             }
             
             if (alumnos.has(nombre)) {
-                alert("El nombre ya está registrado. Introduce otro.");
+                alert("El nombre ya existe. Introduce otro.");
             } else {
                 alumnos.add(nombre);
                 mostrarAlumnos();
