@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let esCero = false;
+        let total = 0;
+        let media = 0;
+        let contador = 0 - 1;
+
+        while (!esCero) {
+            let respuesta = prompt("Introduce un número (Si quiere finalizar introduce 0): ");
+            let numero = parseInt(respuesta);
+        
+            if (respuesta === null) {
+                alert("Cancelada.");
+                break;
+            }
+
+            if (isNaN(numero)) {
+                alert("Eso no es un número válido. Por favor, introduce un número.");
+                continue; 
+            }else{
+                total += numero;
+                contador++
+                media = total/contador;
+            }
+
+            if(numero == 0){
+                esCero = true;
+            }
+        }
+        alert ("La media de los numeros introducido por es: "+media);
+        
+
+    </script>
+</body>
+</html>

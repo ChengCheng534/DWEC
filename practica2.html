@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let numero=prompt("Escribe un número:");
+        let factores = [];
+        let divisor = 2;
+        let contadores = 2;
+        let n_auxnumero;
+
+        if (numero > 1) {
+            while (numero>1) {
+                while (numero % divisor === 0) {
+                    factores[contadores] = divisor;
+                    numero = numero/divisor;
+                    contadores++;
+                }
+                divisor++;
+            }
+        }
+
+        document.write("Los factores primos de " + numero + " son: " + factores.join(', '));
+    </script>
+</body>
+</html>

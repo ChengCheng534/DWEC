@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let nombre=prompt("Introduce tu nombre:");
+        let apellido=prompt("Introduce tu apellido:");
+        let salario=prompt("Introduce tu salario mesual:");
+        let edad=prompt("Introduce tu edad:");
+
+        let tresporciento = salario*0.03;
+        let diezporciento = salario*0.1;
+        let quinceporciento = salario*0.15;
+
+        let resul3=Number(tresporciento)+Number(salario);
+        let resul10=Number(diezporciento)+Number(salario);
+        let resul15=Number(quinceporciento)+Number(salario);
+
+        if(salario>=2000){
+            alert("El salario no aumenta: "+salario);
+        }
+        if(salario>=1000 && salario<=2000){
+            if (edad>45) {
+                alert("Tu salario sube un 3% aumenta "+tresporciento+" €, por lo tanto tu salario final es "+resul3+" €");
+            }else{
+                alert("Tu salario sube un 10% aumenta "+diezporciento+" €, por lo tanto tu salario final es "+resul10+" €");
+            }
+        }
+        if(salario<1000){
+            if (edad<30) {
+                alert("Cobra exactamente 1100 €");
+            }if (edad>=30 && edad<=45){
+                alert("Tu salario sube un 3% aumenta "+tresporciento+" €, por lo tanto tu salario final es "+resul3+" €");
+            }
+            if (edad>45) {
+                alert("Tu salario sube un 15% aumenta "+quinceporciento+" €, por lo tanto tu salario final es "+resul15+" €");
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego de Adivinar el Número</title>
+</head>
+<body>
+    <script>
+            // Generar número aleatorio
+            let numeroAleatorio = Math.floor(Math.random() * 100) + 1;
+            let intentos = 0;
+            let juegoTerminado = false;
+            alert ("numero aletorio "+numeroAleatorio);
+
+            // Iniciar el juego con bucle sin función
+            while (!juegoTerminado) {
+                let respuesta = prompt("Introduce un número entre 1 y 100:");
+
+                // Si el usuario cancela el cuadro, terminamos el juego
+                if (respuesta === null) {
+                    alert("Has cancelado el juego.");
+                    break;
+                }
+
+                // Intentamos convertir la respuesta en número
+                let numeroUsuario = parseInt(respuesta);
+
+                // Verificamos si la respuesta es un número válido
+                if (isNaN(numeroUsuario)) {
+                    alert("Eso no es un número válido. Por favor, introduce un número.");
+                    continue;  // Vuelve a pedir el número
+                }
+
+                intentos++;  // Incrementamos el contador de intentos
+
+                // Verificamos si el número es correcto
+                if (numeroUsuario === numeroAleatorio) {
+                    alert(`¡Felicidades! Has acertado el número en ${intentos} intentos.`);
+                    juegoTerminado = true;
+                } else if (numeroUsuario < numeroAleatorio) {
+                    alert("El número es mayor. Introduce otro número:");
+                } else {
+                    alert("El número es menor. Introduce otro número:");
+                }
+            }
+
+            // Después de ganar o terminar el juego, preguntamos si quiere jugar de nuevo
+            if (confirm("¿Quieres jugar de nuevo?")) {
+                // Esto reinicia el juego recargando la página
+                location.reload();
+            } else {
+                alert("Gracias por jugar. ¡Hasta la próxima!");
+            }
+    </script>
+
+</body>
+</html>
