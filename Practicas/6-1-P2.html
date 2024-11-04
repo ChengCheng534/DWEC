@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // Definición de un prototipo base para puntos
+const Punto = {
+    // Método para inicializar el punto con coordenadas x e y
+    inicializar(x, y) {
+        this.x = typeof x === 'number' ? x : 0;
+        this.y = typeof y === 'number' ? y : 0;
+        return this;
+    },
+
+    // Método para cambiar las coordenadas del punto
+    cambiar(nuevoX, nuevoY) {
+        this.x = typeof nuevoX === 'number' ? nuevoX : this.x;
+        this.y = typeof nuevoY === 'number' ? nuevoY : this.y;
+    },
+
+    // Método para crear y devolver una copia del punto
+    copia() {
+        return Object.create(Punto).inicializar(this.x, this.y);
+    },
+
+    // Método para verificar si dos puntos son iguales
+    iguales(otroPunto) {
+        return this.x === otroPunto.x && this.y === otroPunto.y;
+    },
+
+    // Método para sumar las coordenadas de dos puntos y devolver un nuevo punto con el resultado
+    suma(otroPunto) {
+        return Object.create(Punto).inicializar(this.x + otroPunto.x, this.y + otroPunto.y);
+    },
+
+    // Método para calcular la distancia entre dos puntos
+    obtenerDistancia(otroPunto) {
+        const dx = this.x - otroPunto.x;
+        const dy = this.y - otroPunto.y;
+        return Math.sqrt(dx * dx + dy * dy);
+    }
+};
+
+// Ejemplo de uso:
+let punto1 = Object.create(Punto).inicializar(3, 4);
+let punto2 = Object.create(Punto).inicializar(6, 8);
+
+console.log("Punto 1:", punto1);
+console.log("Punto 2:", punto2);
+
+punto1.cambiar(7, 10);  // Cambia las coordenadas de punto1
+console.log("Punto 1 después de cambiar:", punto1);
+
+let copiaPunto1 = punto1.copia();  // Crea una copia de punto1
+console.log("Copia de Punto 1:", copiaPunto1);
+
+console.log("¿Punto 1 y Punto 2 son iguales?", punto1.iguales(punto2));
+
+let puntoSuma = punto1.suma(punto2);  // Suma de punto1 y punto2
+console.log("Punto resultante de la suma de Punto 1 y Punto 2:", puntoSuma);
+
+let distancia = punto1.obtenerDistancia(punto2);  // Distancia entre punto1 y punto2
+console.log("Distancia entre Punto 1 y Punto 2:", distancia);
+
+    </script>
+</body>
+</html>

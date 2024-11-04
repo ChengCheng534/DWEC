@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practica 6.1</title>
+</head>
+<body>
+    <script>
+        const Puntos = {
+            valor(x,y){
+                this.x = typeof x === 'number' ? x : 0;
+                this.y = typeof y === 'number' ? y : 0;
+                return this;
+            },
+
+            cambiar(x,y){
+                this.x = x;
+                this.y = y;
+            },
+
+            copiar(){
+                return Object.create(Puntos).valor(this.x, this.y)
+            },
+
+            iguales(otroPuntos){
+                return this.x === otroPunto.x && this.y === otroPunto.y;
+            },
+
+            sumar(otroPuntos){
+                return Object.create(Punto).inicializar(this.x + otroPunto.x, this.y + otroPunto.y);
+            },
+
+            obtenerDistancia(otroPuntos){
+                const dx = this.x - otroPuntos.x;
+                const dy = this.y - otroPuntos.y;
+                return Math.sqrt(dx * dx + dy * dy);
+            }
+        }
+    </script>
+</body>
+</html>
