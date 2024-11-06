@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acceso Prohibido</title>
+    <script>
+        function verificarAcceso() {
+            const fecha = new Date();
+            const diaSemana = fecha.getDay(); // 0 es domingo, 1 es lunes, ..., 6 es sábado
+            const hora = fecha.getHours();
+
+            // Verificar si es un día entre lunes y viernes (1-5) y si la hora está entre 9 y 14
+            if (diaSemana >= 1 && diaSemana <= 5 && hora >= 9 && hora < 14) {
+                alert("Bienvenido");
+                //document.getElementById("mensaje").innerText = "Bienvenido";
+            } else {
+                alert("Página cerrada");
+                //document.getElementById("mensaje").innerText = "Página cerrada";
+            }
+        }
+    </script>
+</head>
+<body onload="verificarAcceso()">
+    <h1 id="mensaje"></h1>
+</body>
+</html>

@@ -24,11 +24,11 @@
             },
 
             iguales(otroPuntos){
-                return this.x === otroPunto.x && this.y === otroPunto.y;
+                return this.x === otroPuntos.x && this.y === otroPuntos.y;
             },
 
             sumar(otroPuntos){
-                return Object.create(Punto).inicializar(this.x + otroPunto.x, this.y + otroPunto.y);
+                return Object.create(Puntos).valor(this.x + otroPuntos.x, this.y + otroPuntos.y);
             },
 
             obtenerDistancia(otroPuntos){
@@ -36,7 +36,26 @@
                 const dy = this.y - otroPuntos.y;
                 return Math.sqrt(dx * dx + dy * dy);
             }
-        }
+        };
+
+        let punto1 = Object.create(Puntos).valor(3, 4);
+        let punto2 = Object.create(Puntos).valor(6, 8);
+
+        console.log("Punto 1:", punto1);
+        console.log("Punto 2:", punto2);
+        punto1.cambiar(7, 10); 
+        console.log("Punto 1 después de cambiar:", punto1);
+
+        let copiaPunto1 = punto1.copiar(); 
+        console.log("Copia de Punto 1:", copiaPunto1);
+
+        console.log("¿Punto 1 y Punto 2 son iguales?", punto1.iguales(punto2));
+  
+        let puntoSuma = punto1.sumar(punto2);
+        console.log("Punto resultante de la suma de Punto 1 y Punto 2:", puntoSuma);
+
+        let distancia = punto1.obtenerDistancia(punto2); 
+        console.log("Distancia entre Punto 1 y Punto 2:", distancia);
     </script>
 </body>
 </html>
