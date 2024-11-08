@@ -7,17 +7,34 @@
 </head>
 <body>
     <script>
-        let numero=prompt("Escribe un número:");
-        if (isNaN(Number(numero))) {
-            alert("No es un número.");
+      let numero = 34; // Cambia este número por el que desees
+      let divisoresPrimos = [];
+
+      // Encontrar los divisores
+      for (let i = 1; i <= numero; i++) {
+        if (numero % i === 0) {
+        // Verificar si el divisor es primo
+        let esPrimo = true;
+        if (i < 2) {
+          esPrimo = false; // 0 y 1 no son números primos
+        } else {
+          for (let j = 2; j <= Math.sqrt(i); j++) {
+            if (i % j === 0) {
+            esPrimo = false;
+            break;
+          }
         }
-        else{
-            if (numero%2==0) {
-                alert("El número "+numero+" es un número par.");
-            }else{
-                alert("El número "+numero+" es un número impar.");
-            }
-        }
+      }
+    
+      // Si es primo, agregarlo a la lista
+      if (esPrimo) {
+        divisoresPrimos.push(i);
+      }
+    }
+}
+
+console.log(`Los divisores primos de ${numero} son:`, divisoresPrimos);
+
     </script>
 </body>
 </html>

@@ -8,12 +8,23 @@
 <body>
     <script>
         let numero=prompt("Escribe un número:");
-        if (isNaN(Number(numero))) {
-            alert("No es un número");
+        let factores = [];
+        let divisor = 2;
+        let contadores = 2;
+        let n_auxnumero;
+
+        if (numero > 1) {
+            while (numero>1) {
+                while (numero % divisor === 0) {
+                    factores[contadores] = divisor;
+                    numero = numero/divisor;
+                    contadores++;
+                }
+                divisor++;
+            }
         }
-        else{
-            alert("Es un número");
-        }
+
+        document.write("Los factores primos de " + numero + " son: " + factores.join(', '));
     </script>
 </body>
 </html>
