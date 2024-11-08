@@ -1,11 +1,72 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Diferencia entre Fechas</title>
 </head>
 <body>
-    
+    <h2>Diferencia entre Fechas</h2>
+    <button onclick="pedirFechas()">Calcular diferencia</button>
+
+    <script>
+        // Validar que la fecha tenga formato correcto y valores válidos
+        function validarFecha(fecha) {
+            const regex = /^\d{2}\/\d{2}\/\d{2}$/;
+            if (!regex.test(fecha)) {
+                alert("El formato debe ser dd/mm/aa.");
+                return false;
+            }
+
+            const [dia, mes] = fecha.split('/').map(Number);
+
+            // Verificar que el día y el mes sean válidos
+            if (dia < 1 || dia > 30) {
+                alert("El día debe estar entre 01 y 30.");
+                return false;
+            }
+            if (mes < 1 || mes > 12) {
+                alert("El mes debe estar entre 01 y 12.");
+                return false;
+            }
+
+            return true;
+        }
+
+        // Convertir fecha (dd/mm/aa) a objeto Date
+        function convertirFecha(fecha) {
+            const [dia, mes, anio] = fecha.split('/');
+            const anioCompleto = `20${anio}`; // Convertir 'aa' a '20aa'
+            return new Date(anioCompleto, mes - 1, dia);
+        }
+
+        // Función para calcular la diferencia entre dos fechas usando prompt
+        function pedirFechas() {
+            let fecha1, fecha2;
+
+            // Pedir la primera fecha y validarla
+            do {
+                fecha1 = prompt("Introduce la primera fecha (dd/mm/aa):");
+                if (fecha1 === null) return; // Si el usuario cancela
+            } while (!validarFecha(fecha1));
+
+            // Pedir la segunda fecha y validarla
+            do {
+                fecha2 = prompt("Introduce la segunda fecha (dd/mm/aa):");
+                if (fecha2 === null) return; // Si el usuario cancela
+            } while (!validarFecha(fecha2));
+
+            // Convertir fechas a objetos Date
+            const date1 = convertirFecha(fecha1);
+            const date2 = convertirFecha(fecha2);
+
+            // Calcular la diferencia en milisegundos y convertir a días
+            const diferenciaMilisegundos = Math.abs(date2 - date1);
+            const diferenciaDias = Math.ceil(diferenciaMilisegundos / (1000 * 60 * 60 * 24));
+
+            // Mostrar la diferencia en días
+            alert(`La diferencia entre las fechas es de ${diferenciaDias} días.`);
+        }
+    </script>
 </body>
 </html>

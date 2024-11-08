@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diferencia entre Fechas</title>
+</head>
+<body>
+    <h2>Calculadora de Diferencia entre Fechas</h2>
+    <form id="fechaForm">
+        <label for="fecha1">Introduce la primera fecha (dd/mm/aa):</label><br>
+        <input type="text" id="fecha1" placeholder="dd/mm/aa"><br><br>
+        <label for="fecha2">Introduce la segunda fecha (dd/mm/aa):</label><br>
+        <input type="text" id="fecha2" placeholder="dd/mm/aa"><br><br>
+        <button type="button" onclick="calcularDiferencia()">Calcular diferencia</button>
+    </form>
+    <p id="resultado"></p>
+
+    <script>
+        // Validar formato de fecha (dd/mm/aa)
+        function validarFecha(fecha) {
+            const regex = /^\d{2}\/\d{2}\/\d{2}$/;
+            return regex.test(fecha);
+        }
+
+        // Convertir fecha (dd/mm/aa) a objeto Date
+        function convertirFecha(fecha) {
+            const [dia, mes, anio] = fecha.split('/');
+            // Añadir '20' al inicio del año para convertirlo a formato completo
+            const anioCompleto = `20${anio}`;
+            return new Date(anioCompleto, mes - 1, dia);
+        }
+
+        // Calcular diferencia en días entre dos fechas
+        function calcularDiferencia() {
+            const fecha1 = document.getElementById("fecha1").value;
+            const fecha2 = document.getElementById("fecha2").value;
+
+            // Validar ambas fechas
+            if (!validarFecha(fecha1) || !validarFecha(fecha2)) {
+                alert("Por favor, introduce fechas válidas en el formato dd/mm/aa.");
+                return;
+            }
+
+            // Convertir las fechas a objetos Date
+            const date1 = convertirFecha(fecha1);
+            const date2 = convertirFecha(fecha2);
+
+            // Calcular la diferencia en milisegundos
+            const diferenciaMilisegundos = Math.abs(date2 - date1);
+
+            // Convertir la diferencia a días
+            const diferenciaDias = Math.ceil(diferenciaMilisegundos / (1000 * 60 * 60 * 24));
+
+            // Mostrar el resultado
+            document.getElementById("resultado").textContent = 
+                `La diferencia entre las fechas es de ${diferenciaDias} días.`;
+        }
+    </script>
+</body>
+</html>
