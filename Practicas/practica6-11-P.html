@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baraja de cartas</title>
+</head>
+<body>
+    <script>
+      // Función para crear una carta
+      function crearCarta(palo, valor) {
+        // Validar los datos
+        if (palo < 1 || palo > 4 || valor < 1 || valor > 10) {
+          return null;
+        }
+
+        // Objeto carta
+        return {
+          palo,
+          valor,
+          darValor: function (nuevoPalo, nuevoValor) {
+            if (nuevoPalo >= 1 && nuevoPalo <= 4 && nuevoValor >= 1 && nuevoValor <= 10) {
+              this.palo = nuevoPalo;
+              this.valor = nuevoValor;
+            }
+          },
+          obtenerNombrePalo: function () {
+            const palos = ["Oros", "Espadas", "Bastos", "Copas"];
+            return palos[this.palo - 1];
+          },
+          obtenerNombreValor: function () {
+            const valoresEspeciales = { 1: "As", 8: "Sota", 9: "Caballo", 10: "Rey" };
+            return valoresEspeciales[this.valor] || this.valor;
+          },
+          toString: function () {
+            if (this.palo === null || this.valor === null) {
+              return "Carta inválida";
+            }
+            return `${this.obtenerNombreValor()} de ${this.obtenerNombrePalo()}`;
+          }
+        };
+      }
+
+      // Función para crear una baraja
+      function crearBaraja() {
+        const baraja = {
+          cartas: [],
+          // Rellenar la baraja con 40 cartas
+          inicializar: function () {
+            for (let palo = 1; palo <= 4; palo++) {
+              for (let valor = 1; valor <= 10; valor++) {
+                const carta = crearCarta(palo, valor);
+                if (carta) this.cartas.push(carta);
+              }
+            }
+          },
+          // Método para barajar la baraja
+          barajar: function () {
+            this.cartas.sort(() => Math.random() - 0.5);
+          },
+          // Método para mostrar la baraja como texto
+          toString: function () {
+            return this.cartas.map(carta => carta.toString()).join("\n");
+          }
+        };
+
+        // Inicializar la baraja al crearla
+        baraja.inicializar();
+        return baraja;
+      }
+
+      // Ejecución de pruebas
+
+      // Crear una nueva baraja
+      const baraja = crearBaraja();
+      console.log("Baraja original:");
+      console.log(baraja.toString());
+
+      // Barajar la baraja
+      baraja.barajar();
+      console.log("\nBaraja barajada:");
+      console.log(baraja.toString());
+
+      // Crear una carta específica y mostrar su valor
+      const carta = crearCarta(3, 9);
+      console.log("\nCarta específica:");
+      console.log(carta.toString());
+
+      // Modificar la carta usando darValor
+      carta.darValor(4, 10);
+      console.log("\nCarta modificada:");
+      console.log(carta.toString());
+    </script>
+</body>
+</html>

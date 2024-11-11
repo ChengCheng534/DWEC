@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baraja de cartas</title>
+</head>
+<body>
+    <script>
+        // Definimos la clase Carta
+        class Carta {
+            constructor(palo, valor) {
+                // Validación del palo y el valor al crear la carta
+                if (palo >= 1 && palo <= 4 && valor >= 1 && valor <= 10) {
+                    this.palo = palo;
+                    this.valor = valor;
+                } else {
+                    this.palo = null;
+                    this.valor = null;
+                }
+            }
+
+            // Método para modificar los valores de la carta si los datos son correctos
+            darValor(palo, valor) {
+                if (palo >= 1 && palo <= 4 && valor >= 1 && valor <= 10) {
+                    this.palo = palo;
+                    this.valor = valor;
+                }
+            }
+
+            // Método para obtener el nombre del palo en forma de texto
+            obtenerNombrePalo() {
+                switch (this.palo) {
+                    case 1: return "Oros";
+                    case 2: return "Espadas";
+                    case 3: return "Bastos";
+                    case 4: return "Copas";
+                    default: return "";
+                }
+            }
+
+            // Método para obtener el nombre del valor en forma de texto
+            obtenerNombreValor() {
+                switch (this.valor) {
+                    case 1: return "As";
+                    case 8: return "Sota";
+                    case 9: return "Caballo";
+                    case 10: return "Rey";
+                    default: return this.valor;
+                }
+            }
+
+            // Método toString para representar la carta como texto
+            toString() {
+                if (this.palo === null || this.valor === null) {
+                    return "Carta inválida";
+                }
+                return `${this.obtenerNombreValor()} de ${this.obtenerNombrePalo()}`;
+            }
+        }
+
+        // Definimos la clase Baraja
+        class Baraja {
+            constructor() {
+                // Array privado para las cartas de la baraja
+                this.cartas = [];
+
+                // Llenamos la baraja con las cartas en orden
+                for (let palo = 1; palo <= 4; palo++) {
+                    for (let valor = 1; valor <= 10; valor++) {
+                        this.cartas.push(new Carta(palo, valor));
+                    }
+                }
+            }
+
+            // Método para barajar la baraja (desordenar aleatoriamente)
+            barajar() {
+                for (let i = this.cartas.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [this.cartas[i], this.cartas[j]] = [this.cartas[j], this.cartas[i]];
+                }
+            }
+
+            // Método toString para representar la baraja como texto
+            toString() {
+                return this.cartas.map(carta => carta.toString()).join("\n");
+            }
+        }
+
+        // Pruebas de funcionamiento
+
+        // Crear una nueva baraja
+        const baraja = new Baraja();
+        console.log("Baraja original:");
+        console.log(baraja.toString());
+
+        // Barajar la baraja
+        baraja.barajar();
+        console.log("\nBaraja barajada:");
+        console.log(baraja.toString());
+
+        // Crear una carta específica y mostrar su valor
+        const carta = new Carta(3, 9);
+        console.log("\nCarta específica:");
+        console.log(carta.toString());
+
+        // Modificar la carta usando darValor
+        carta.darValor(4, 10);
+        console.log("\nCarta modificada:");
+        console.log(carta.toString());
+    </script>
+</body>
+</html>

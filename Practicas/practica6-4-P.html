@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Herencia</title>
+</head>
+<body>
+    <script>
+        // Función para crear un objeto Ordenador
+        function crearOrdenador(marca, modelo, ram = 4, discoDuro = 512, pulgadas = 17) {
+            if (!marca || !modelo) {
+                throw new Error("La marca y el modelo son obligatorios.");
+            }
+  
+            // Objeto ordenador
+            const ordenador = {
+                marca: marca,
+                modelo: modelo,
+                ram: ram,
+                discoDuro: discoDuro,
+                pulgadas: pulgadas,
+    
+                // Método toString para obtener los detalles del ordenador
+                toString: function() {
+                    return `Ordenador:
+                        Marca: ${this.marca}.
+                        Modelo: ${this.modelo}.
+                        RAM: ${this.ram}GB.
+                        Disco Duro: ${this.discoDuro}GB.
+                        Pantalla: ${this.pulgadas}".`;
+                }
+            };
+            return ordenador;
+        }
+
+        // Función para crear un objeto Portátil que hereda de Ordenador
+        function crearPortatil(marca, modelo, ram = 4, discoDuro = 256, pulgadas = 12, autonomia = 4) {
+            // Creamos un ordenador base usando la función anterior
+            const portatil = crearOrdenador(marca, modelo, ram, discoDuro, pulgadas);
+
+            // Añadimos la propiedad específica de los portátiles
+            portatil.autonomia = autonomia;
+
+            // Sobrescribimos el método toString para añadir la autonomía
+            portatil.toString = function() {
+                return `Portátil:
+                Marca: ${this.marca}.
+                Modelo: ${this.modelo}.
+                RAM: ${this.ram}GB.
+                Disco Duro: ${this.discoDuro}GB.
+                Pantalla: ${this.pulgadas}".
+                Autonomía: ${this.autonomia} horas.`;
+            };
+
+            return portatil;
+        }
+
+        // Crear un objeto Ordenador
+        const ordenador1 = crearOrdenador("Asus", "ZenBook");
+        console.log(ordenador1.toString());
+        // Output: Ordenador - Marca: Asus, Modelo: ZenBook, RAM: 4GB, Disco Duro: 512GB, Pantalla: 17"
+
+        // Crear un objeto Portátil
+        const portatil1 = crearPortatil("Lenovo", "ThinkPad", 8, 512, 14, 7);
+        console.log(portatil1.toString());
+        // Output: Portátil - Marca: Lenovo, Modelo: ThinkPad, RAM: 8GB, Disco Duro: 512GB, Pantalla: 14", Autonomía: 7 horas
+
+        // Crear un portátil con valores por defecto
+        const portatil2 = crearPortatil("Apple", "MacBook Air");
+        console.log(portatil2.toString());
+        // Output: Portátil - Marca: Apple, Modelo: MacBook Air, RAM: 4GB, Disco Duro: 256GB, Pantalla: 12", Autonomía: 4 horas
+    </script>
+</body>
+</html>

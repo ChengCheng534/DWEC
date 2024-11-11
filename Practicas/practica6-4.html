@@ -6,6 +6,62 @@
     <title>Herencia</title>
 </head>
 <body>
-    
+    <script>
+        // Clase base: Ordenador
+        class Ordenador {
+            constructor(marca, modelo, ram = 4, discoDuro = 512, pulgadas = 17) {
+                if (!marca || !modelo) {
+                    throw new Error("La marca y el modelo son obligatorios");
+                }
+                this.marca = marca;
+                this.modelo = modelo;
+                this.ram = ram;
+                this.discoDuro = discoDuro;
+                this.pulgadas = pulgadas;
+            }
+
+            // Método toString para mostrar los detalles del ordenador
+            toString() {
+                return `Ordenador:
+                Marca: ${this.marca}. 
+                Modelo: ${this.modelo}. 
+                RAM: ${this.ram}GB.
+                Disco Duro: ${this.discoDuro}GB. 
+                Pantalla: ${this.pulgadas}".`;
+            }
+        }
+        // Clase derivada: Portátil
+        class Portatil extends Ordenador {
+            constructor(marca, modelo, ram = 4, discoDuro = 256, pulgadas = 12, autonomia = 4) {
+                super(marca, modelo, ram, discoDuro, pulgadas);
+                this.autonomia = autonomia;
+            }
+
+            // Método toString para mostrar los detalles del portátil, añadiendo la autonomía
+            toString() {
+                return `Portátil:
+                    Marca: ${this.marca}.
+                    Modelo: ${this.modelo}.
+                    RAM: ${this.ram}GB.
+                    Disco Duro: ${this.discoDuro}GB.
+                    Pantalla: ${this.pulgadas}".
+                    Autonomía: ${this.autonomia} horas.`;
+            }
+        }
+        // Crear un objeto Ordenador
+        const ordenador1 = new Ordenador("Dell", "Inspiron");
+        console.log(ordenador1.toString()); 
+        // Output: Ordenador - Marca: Dell, Modelo: Inspiron, RAM: 4GB, Disco Duro: 512GB, Pantalla: 17"
+
+        // Crear un objeto Portátil
+        const portatil1 = new Portatil("HP", "Pavilion", 8, 512, 13, 6);
+        console.log(portatil1.toString()); 
+        // Output: Portátil - Marca: HP, Modelo: Pavilion, RAM: 8GB, Disco Duro: 512GB, Pantalla: 13", Autonomía: 6 horas
+
+        // Crear un portátil usando valores por defecto
+        const portatil2 = new Portatil("Apple", "MacBook Air");
+        console.log(portatil2.toString()); 
+        // Output: Portátil - Marca: Apple, Modelo: MacBook Air, RAM: 4GB, Disco Duro: 256GB, Pantalla: 12", Autonomía: 4 horas
+    </script>
 </body>
 </html>
