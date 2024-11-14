@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bombo de Lotería</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+        }
+
+        .result {
+            margin-top: 20px;
+        }
+
+        .balls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .ball {
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Bombo de Lotería</h2>
+        <label for="numBolas">Número de bolas a extraer (1-90):</label>
+        <input type="number" id="numBolas" min="1" max="90">
+        <button onclick="iniciarExtraccion()">Extraer</button>
+
+        <div id="resultados" class="result">
+            <h3>Cantidad de bolas en el bombo:</h3>
+            <p id="cantidadBombo"></p>
+
+            <h3>Bolas en el bombo:</h3>
+            <div id="bolasBombo" class="balls"></div>
+
+            <h3>Cantidad de bolas extraídas:</h3>
+            <p id="cantidadExtraidas"></p>
+
+            <h3>Bolas extraídas:</h3>
+            <div id="bolasExtraidas" class="balls"></div>
+        </div>
+    </div>
+
+    <script>
+        class Bombo {
+            constructor() {
+                this.bolas = [];
+                this.extraidas = [];
+                this.inicializar();
+            }
+
+            // Inicializar el bombo con 90 bolas desordenadas
+            inicializar() {
+                this.bolas = Array.from({ length: 90 }, (_, i) => i + 1);
+                this.bolas.sort(() => Math.random() - 0.5);
+            }
+
+            // Extraer una bola
+            extraerBola() {
+                if (this.bolas.length === 0) return null;
+                const bola = this.bolas.pop();
+                this.extraidas.push(bola);
+                return bola;
+            }
+
+            // Mostrar las bolas que quedan en el bombo
+            mostrarBolas() {
+                return this.bolas;
+            }
+
+            // Mostrar las bolas que ya han sido extraídas
+            mostrarBolasExtraidas() {
+                return this.extraidas;
+            }
+
+            // Cantidad de bolas en el bombo
+            cantidadBolasEnBombo() {
+                return this.bolas.length;
+            }
+
+            // Cantidad de bolas extraídas
+            cantidadBolasExtraidas() {
+                return this.extraidas.length;
+            }
+        }
+
+        // Crear una instancia del bombo
+        const bombo = new Bombo();
+
+        // Función para validar y realizar la extracción
+        function iniciarExtraccion() {
+            const numBolas = parseInt(document.getElementById('numBolas').value);
+
+            // Validar el número de bolas introducido por el usuario
+            if (isNaN(numBolas) || numBolas < 1 || numBolas > 90) {
+                alert("Por favor, introduce un número válido entre 1 y 90.");
+                return;
+            }
+
+            // Extraer las bolas solicitadas
+            for (let i = 0; i < numBolas; i++) {
+                bombo.extraerBola();
+            }
+
+            // Actualizar la información en la página web
+            document.getElementById('cantidadBombo').textContent = bombo.cantidadBolasEnBombo();
+            document.getElementById('bolasBombo').innerHTML = bombo.mostrarBolas().map(bola => `<div class="ball">${bola}</div>`).join('');
+            document.getElementById('cantidadExtraidas').textContent = bombo.cantidadBolasExtraidas();
+            document.getElementById('bolasExtraidas').innerHTML = bombo.mostrarBolasExtraidas().map(bola => `<div class="ball">${bola}</div>`).join('');
+        }
+    </script>
+</body>
+
+</html>
