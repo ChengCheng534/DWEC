@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contador de Palabras</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <h1>Contador de Repeticiones de Palabras</h1>
+    <button onclick="iniciarContador()">Ingresar Palabras</button>
+    <div id="resultado"></div>
+
+    <script>
+        function iniciarContador() {
+            let palabras = [];
+            let palabra;
+
+            // Continuar pidiendo palabras hasta que el usuario cancele o deje el cuadro vacío
+            while (true) {
+                palabra = prompt("Ingrese una palabra (o deje en blanco para terminar):");
+                if (palabra === null || palabra.trim() === "") {
+                    break;
+                }
+                palabras.push(palabra.trim().toLowerCase());
+            }
+
+            // Crear el mapa con las repeticiones de palabras
+            const mapaRepeticiones = contarPalabras(palabras);
+
+            // Mostrar el resultado en la página
+            mostrarResultado(mapaRepeticiones);
+        }
+
+        // Función que cuenta las repeticiones de palabras
+        function contarPalabras(array) {
+            const mapa = new Map();
+
+            for (let palabra of array) {
+                if (mapa.has(palabra)) {
+                    mapa.set(palabra, mapa.get(palabra) + 1);
+                } else {
+                    mapa.set(palabra, 1);
+                }
+            }
+
+            return mapa;
+        }
+
+        // Función para mostrar el resultado en la página
+        function mostrarResultado(mapa) {
+            const resultadoDiv = document.getElementById("resultado");
+            resultadoDiv.innerHTML = "<h2>Repeticiones de Palabras:</h2>";
+
+            // Crear una lista para mostrar el mapa
+            const lista = document.createElement("ul");
+            for (let [palabra, cantidad] of mapa) {
+                const item = document.createElement("li");
+                item.textContent = `${palabra}: ${cantidad}`;
+                lista.appendChild(item);
+            }
+
+            resultadoDiv.appendChild(lista);
+        }
+    </script>
+</body>
+
+</html>

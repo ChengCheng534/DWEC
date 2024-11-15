@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Bombo de Lotería</title>
+</head>
+<body>
+    <h2>Juego del Bombo</h2>
+    <label for="numBolas">Introduce el número de bolas a extraer (1-90):</label>
+    <input type="number" id="numBolas" min="1" max="90">
+    <button onclick="jugar()">Extraer Bolas</button>
+    
+    <h3>Bolas en el bombo:</h3>
+    <div id="bolasEnBombo"></div>
+    
+    <h3>Bolas extraídas:</h3>
+    <div id="bolasExtraidas"></div>
+
+    <script>
+        /*Crear una función que compruebe que el número de bolas a extraer que quiere el usuario. 
+          Se comprobará que ha introducido un valor, que el valor introducido es del tipo correcto, 
+          el número mínimo de bolas es 1 y el máximo 90. 
+            * Crear el objeto bombo con sus atributos y métodos. 
+                - inicializar: Rellena el bombo con 90 bolas (no están ordenadas) 
+                - extraerBola: Saca una bola del bombo y la pone en bolas extraidas. 
+                - mostrarBolas: Muestra en la web las bolas en el bombo. 
+                - mostrarBolasExtraidas: Muestra en la web las bolas extraidas. 
+                - cantidadBolasEnBombo: Devuelve la cantidad de bolas en el bombo. 
+                - cantidadBolasExtraidas: Devuelve la cantidad de bolas extraidas. 
+            // Pedir al usuario que introduzca el número de bolas a extraer. 
+            // Mostrar en pantalla la cantidad de bolas en el bombo. 
+            // Mostrar en pantalla las bolas en el bombo. 
+            // Mostrar en pantalla la cantidad de bolas extraídas. 
+            // Mostrar en pantalla las bolas extraídas.*/
+        
+        // Validar la entrada del usuario
+        function validarNumeroBolas(numero) {
+            if (isNaN(numero)) {
+                alert("Por favor, introduce un número.");
+                return false;
+            }
+            if (numero < 1 || numero > 90) {
+                alert("El número debe estar entre 1 y 90.");
+                return false;
+            }
+            return true;
+        }
+
+        // Crear el objeto Bombo
+        const bombo = {
+            bolas: [],
+            bolasExtraidas: [],
+            
+            // Inicializar el bombo con 90 bolas aleatorias (no ordenadas)
+            inicializar: function() {
+                this.bolas = Array.from({length: 90}, (_, i) => i + 1);
+                this.bolas.sort(() => Math.random() - 0.5);
+                this.bolasExtraidas = [];
+            },
+            
+            // Extraer una bola del bombo
+            extraerBola: function() {
+                if (this.bolas.length === 0) {
+                    alert("No hay más bolas en el bombo.");
+                    return null;
+                }
+                const bola = this.bolas.pop();
+                this.bolasExtraidas.push(bola);
+                return bola;
+            },
+            
+            // Mostrar bolas en el bombo
+            mostrarBolas: function() {
+                return this.bolas.join(", ");
+            },
+            
+            // Mostrar bolas extraídas
+            mostrarBolasExtraidas: function() {
+                return this.bolasExtraidas.join(", ");
+            },
+            
+            // Cantidad de bolas en el bombo
+            cantidadBolasEnBombo: function() {
+                return this.bolas.length;
+            },
+            
+            // Cantidad de bolas extraídas
+            cantidadBolasExtraidas: function() {
+                return this.bolasExtraidas.length;
+            }
+        };
+
+        // Inicializar el bombo al cargar la página
+        bombo.inicializar();
+
+        // Función para gestionar el juego al hacer clic en el botón
+        function jugar() {
+            const numBolas = parseInt(document.getElementById("numBolas").value);
+            
+            // Validar la entrada del usuario
+            if (!validarNumeroBolas(numBolas)) return;
+
+            // Extraer el número de bolas solicitado
+            for (let i = 0; i < numBolas; i++) {
+                bombo.extraerBola();
+            }
+
+            // Mostrar el estado del bombo y las bolas extraídas
+            document.getElementById("bolasEnBombo").textContent = 
+                `Bolas en el bombo (${bombo.cantidadBolasEnBombo()}): ${bombo.mostrarBolas()}`;
+            document.getElementById("bolasExtraidas").textContent = 
+                `Bolas extraídas (${bombo.cantidadBolasExtraidas()}): ${bombo.mostrarBolasExtraidas()}`;
+        }
+    </script>
+</body>
+</html>
