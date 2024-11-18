@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <section id="sl">
+        <h1>Título</h1>
+        <p>Ejemplo de documento <strong>DOM</strong>Vísión en árbol</p>
+    </section>
+    <section id="s2">
+        <p>Aquí sólo hay texto</p>
+    </section>
+
+    <main id="principal">
+        <p>Uno</p>
+        <p>Dos</p>
+        <p>Tres</p>
+    </main>
+    <p>Cuatro</p>
+    <p>Cinco</p>
+
+    <ul>
+        <li class="verdura">Cebolla</li>
+        <li class="verdura">Ajo</li>
+        <li class="carne">Pollo</li>
+        <li class="verdura">Lechuga</li>
+        <li class="carne">Ternera</li>
+        <li class="hidrato">Pan</li>
+        <li class="hidrato">Arroz</li>
+        <li class="carne">Cerdo</li>
+        <li class="verdura">Tomate</li>
+        <li class="hidrato">Lentejas</li>
+    </ul>
+
+    <script>
+        let seccion=document.getElementById("sl");
+        console.log(seccion.nodeType);
+        console.log(document.nodeType);
+        console.log(sl.nodeName);
+        console.log(document.nodeName)
+
+        let elementosP=document.getElementsByTagName("p");
+        console.log(elementosP.length);
+        console.log(elementosP[0]);
+        console.log(elementosP[0].textContent);
+
+        let principal=document.getElementById("principal");
+        let interiores=principal.getElementsByTagName("p");
+        console.log("Número de etiqueta dentro de la ID principal: "+interiores.length);
+
+        let verduras=document.getElementsByClassName("verdura");
+        console.log("Nº de clases: "+verduras.length);
+
+        let verduras1=document.querySelectorAll(".verdura");
+        console.log("Cantidad de clases: "+verduras1.length);
+
+        console.log(document.querySelectorAll("ul li"));
+        console.log(document.querySelectorAll("li:first-of-type"));
+        console.log(document.querySelectorAll("li.verdura:first-of-type"));
+        console.log(document.querySelectorAll("*"));
+
+    </script>
+</body>
+</html>
