@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Reordenar Parrafos</h1>
+    <div id="parrafos">
+        <p id="P1">Este es el parrafo 1.</p>
+        <p id="P2">Este es el parrafo 2.</p>
+        <p id="P3">Este es el parrafo 3.</p>
+        <p id="P4">Este es el parrafo 4.</p>
+        <p id="P5">Este es el parrafo 5.</p>
+        <p id="P6">Este es el parrafo 6.</p>
+    </div>
+    <!--Ejercicio1-->
+    <!--Crear un nuevo nodo elemento con id="P7"-->
+    <!--Añadir el nuevo nodo al final de los hijos del nodo "parrafos"-->
+    <!--Mover el ultimo nodo al principio de los hijos del nodo padre "parrafos"-->
+    <!--Mover el nodo p2 a la sexta posicion de los hijos-->
+    <!--Ejercicio1-->
+
+    <script>
+        let parrafosPadre = document.getElementById("parrafos");
+
+        // Crear un nuevo nodo elemento con id="P2"
+        let nuevoParrafo = document.createElement("p");
+        nuevoParrafo.id = "P7";
+        nuevoParrafo.textContent = "Este es el nuevo parrafo 7."; 
+    
+        // Añadir el nuevo nodo al final de los hijos del nodo "parrafos"
+        parrafosPadre.appendChild(nuevoParrafo);
+    
+        // Mover el último nodo al principio de los hijos del nodo padre "parrafos"
+        let ultimoNodo = parrafosPadre.lastElementChild;
+        parrafosPadre.insertBefore(ultimoNodo, parrafosPadre.firstChild);
+    
+        // Mover el nodo con id="P2" a la sexta posición de los hijos
+        let nodoP2 = document.getElementById("P2");
+        let sextoNodo = parrafosPadre.children[5]; // La sexta posición tiene índice  5
+        parrafosPadre.insertBefore(nodoP2, sextoNodo.nextSibling);
+    </script>
+    
+</body>
+</html>
