@@ -1,0 +1,56 @@
+<!-- Ejercicio -->
+<!-- Utilizar className --> 
+<!-- Seleccionar todos los elementos con la clase original -->
+<!-- Cambiar la clase "original"  por  "modificado"  y  "otro-estilo" -->
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modificar Clases con className</title>
+    <style>
+        /* Estilo por defecto tu raza hijo de puta */
+        .original {
+            color: blue;
+            font-size: 20px;
+        }
+
+        /* Nuevo estilo */
+        .modificado {
+            color: red;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .otro-estilo {
+            background-color: yellow;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="original">Este es un encabezado</h1>
+    <p class="original">Este es un párrafo de texto inicial.</p>
+    <div class="original">Este es un div de ejemplo.</div>
+
+    <script>
+        const original = document.querySelectorAll('.original');
+        console.log(original)
+
+        /*
+        original.forEach(elemento => {
+            elemento.className = 'modificado otro-estilo';});
+        */
+
+        /*
+        original.forEach(elemento => {
+            elemento.classList.remove('original');
+
+            elemento.classList.add('modificado', 'otro-estilo');
+        });
+        */
+
+    </script>
+</body>
