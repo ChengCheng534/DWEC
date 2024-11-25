@@ -1,0 +1,74 @@
+<!-- Ejercicio -->
+<!-- Mostrar por consola los siguientes elementos de diversas listas  -->
+<!-- Seleccionar el primer elemento de la lista de la primera lista-->
+<!-- Seleccionar todos los elementos de todas las listas -->
+<!-- Verifica si exite la lista con class="ensalada" -->
+<!-- Seleccionar todos los elementos de la lista con la clase "ensalada" -->
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>querySelector vs querySelectorAll</title>
+</head>
+<body>
+    <ul class="fruta">
+        <li>Manzana</li>
+        <li>Pera</li>
+        <li>Uva</li>
+        <li>Melocotón</li>
+        <li>Mandarina</li>
+    </ul>
+
+    <ul class="ensalada"> 
+        <li>Puerro</li>
+        <li>Pepino</li>
+        <li>Zanahoria</li>
+        <li>Lechuga</li>
+        <li>Aguacate</li>
+    </ul>
+
+    <script>
+        const fruta = document.querySelector('.fruta');
+        const ensalada = document.querySelector('.ensalada');
+
+        // 1. Seleccionar todos los elementos de todas las dos listas:
+        const todosElementos = document.querySelectorAll('ul li');
+        console.log('Todos los elementos de todas las dos listas:');
+        todosElementos.forEach((elemento, num) => {
+            console.log(`Elemento ${num + 1}:`, elemento.textContent);
+        });
+        console.log('...');
+
+        // 2. Seleccionar el primer elemento de la lista de la primera lista
+        const listaFruta = document.querySelector('.fruta li');
+        console.log('Primer elemento de la primera lista:', listaFruta.textContent);
+        console.log('...');
+
+        // 3. Verificar si existe la lista con class="ensalada"
+        const existeEnsalada = document.querySelector('.ensalada') !== null;
+        console.log('¿Existe la lista con class="ensalada"?', existeEnsalada);
+        console.log('...');
+
+        // 4. Seleccionar todos los elementos de la lista con la  clase "ensalada"
+        const elementosEnsalada = document.querySelectorAll('.ensalada li');
+        console.log('Elementos de la lista con clase "ensalada":');
+        elementosEnsalada.forEach((elemento, num) => {
+            console.log(`Elemento ${num + 1}:`, elemento.textContent);
+        });
+        console.log('...');
+        
+        //5. Agregar a la class ensalada un nuevo elemento con el valor de berrenjenas y visualiza la nueva class ensalada
+        let nuevoListas = document.createElement("li");
+        nuevoListas.className = "ensalada";
+        nuevoListas.textContent = "Berenjenas"; 
+
+        console.log('Elementos de la lista con clase "ensalada":');
+        ensalada.appendChild(nuevoListas);
+        const newListasEnsalada = document.querySelectorAll('.ensalada li');
+        newListasEnsalada.forEach((elemento, num) => {
+            console.log(`Elemento ${num + 1}:`, elemento.textContent);
+        });
+    </script>
+</body>
