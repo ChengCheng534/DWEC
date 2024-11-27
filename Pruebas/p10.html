@@ -1,0 +1,46 @@
+<!--Ejercicio-->
+<!--Cambiar el fondo del h1 a amarillo-->
+<!--Seleccionar todos los h2 y agregarles la clase .subtitulos-->
+<!--Obtener elementos con la clase .estilo-letras y removerla-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manipulación de Estilos</title>
+  <style>
+    /* Estilo CSS integrado */
+    .subtitulos {
+      color: teal;
+      font-size: 2rem;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+  </style>
+</head>
+<body>
+  <h1 id="titulo-principal">Este es un título principal</h1>
+  <h2>Este es un subtítulo 1</h2>
+  <h2>Este es un subtítulo 2</h2>
+  <p class="estilo-letras">Este es un párrafo con estilo que será modificado.</p>
+  <p class="estilo-letras">Otro párrafo con estilo que también será modificado.</p>
+
+  <script>
+    // Cambiar el fondo del h1 a amarillo
+    const titulo = document.getElementById("titulo-principal");
+    titulo.style.background="yellow";
+
+
+    // 2. Seleccionar todos los h2 y agregarles la clase .subtitulos
+    const subtitulos = document.querySelectorAll("h2"); // Selecciona todos los h2
+    subtitulos.forEach((h2) => {
+      h2.classList.add("subtitulos"); // Agrega la clase subtitulos
+    });
+
+    // Obtener elementos con la clase .estilo-letras y removerla
+    const elementosConEstilo = document.querySelectorAll('.estilo-letras');
+    elementosConEstilo.forEach(elemento => {
+        elemento.classList.remove('estilo-letras');
+    });
+  </script>
+</body>
+</html>
