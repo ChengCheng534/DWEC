@@ -1,11 +1,49 @@
+<!-- Ejercicio -->
+<!-- Obtener todos los nodos que sen padres y visualizar los nodos con sus nombres 
+y el número de hijos-->
+<!-- Obtener todos los nodos que tengan la etiqueta "p" y -->
+<!-- y visualizar por consola todos con su nombre de etiqueda, su id y su valor -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reordenar Párrafos</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    p {
+      margin: 10px 0;
+    }
+  </style>
 </head>
 <body>
-    
+  <h1>Reordenar Párrafos</h1>
+  <div id="parrafos">
+    <p id="p1">Este es el párrafo 1.</p>
+    <p id="p2">Este es el párrafo 2.</p>
+    <p id="p3">Este es el párrafo 3.</p>
+    <p id="p4">Este es el párrafo 4.</p>
+    <p id="p5">Este es el párrafo 5.</p>
+    <p id="p6">Este es el párrafo 6.</p>
+  </div>
+
+  <script>
+    // 1. Obtener todos los nodos que sean padres
+    const padreNodos = document.querySelectorAll('*'); // Seleccionar todos los nodos
+    padreNodos.forEach(node => {
+      if (node.children.length > 0) { // Si el nodo tiene hijos
+        console.log(`Padre: ${node.nodeName}, Nº de hijos: ${node.children.length}`);
+      }
+    });
+
+    // 2. Obtener todos los nodos que tengan la etiqueta "p"
+    const nodoP = document.querySelectorAll('p'); // Seleccionar todos los <p>
+    nodoP.forEach(p => {
+      console.log(`Etiqueta: ${p.nodeName}, ID: ${p.id}, Texto: "${p.textContent}"`);
+    });
+  </script>
 </body>
 </html>
