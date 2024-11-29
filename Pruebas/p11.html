@@ -1,0 +1,51 @@
+<!-- Ejercicio -->
+<!-- Obtener el número de enlaces de la página HTML  y mostrarlo por consola o por document-->
+<!-- Obtener la dirección del penúltimo enlace y mostrarlo por consola o por document -->
+<!-- Número de enlaces que apuntan a https://prueba3.com-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contador de Enlaces</title>
+</head>
+<body>
+    <h1>Lista de enlaces</h1>
+    <!-- 10 enlaces de ejemplo -->
+    <a href="https://prueba3.com">Enlace 1</a><br>
+    <a href="https://example1.com">Enlace 2</a><br>
+    <a href="https://example2.com">Enlace 3</a><br>
+    <a href="https://example3.com">Enlace 4</a><br>
+    <a href="https://example4.com">Enlace 5</a><br>
+    <a href="https://example5.com">Enlace 6</a><br>
+    <a href="https://example6.com">Enlace 7</a><br>
+    <a href="https://prueba3.com">Enlace 8</a><br>
+    <a href="https://example7.com">Enlace 9</a><br>
+    <a href="https://prueba3.com">Enlace 10</a><br>
+
+    <p id="result"></p>
+
+    <script>
+        // Obtener todos los enlaces en la página
+        const enlaces = document.getElementsByTagName('a');
+    
+        // Mostrar el número total de enlaces en la consola
+        console.log('Número total de enlaces:', enlaces.length);
+    
+        // Obtener la dirección del penúltimo enlace
+        const penultimoEnlace = enlaces[enlaces.length - 2].href;
+        console.log('Dirección del penúltimo enlace:', penultimoEnlace);
+    
+        // Contar cuántos enlaces apuntan a "https://prueba3.com"
+        let contadorPrueba3 = 0;
+        for (let i = 0; i < enlaces.length; i++) {
+            if (enlaces[i].href === 'https://prueba3.com') {
+                contadorPrueba3++;
+            }
+        }
+        console.log('Número de enlaces que apuntan a https://prueba3.com:', contadorPrueba3);
+    
+    </script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Búsqueda de Palabra en Documento</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #searchBox {
+            width: 300px;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+ 
+        .highlight {
+            background-color: yellow;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Buscador de Palabra en el Documento</h1>
+
+    <input type="text" id="buscador" placeholder="Escribe la palabra a buscar..." oninput="highlightWord()">
+
+    <div id="content">
+        <p>Las cookies no son más que una serie de archivos de texto que las aplicaciones web graban en
+            el ordenador del usuario que contienen datos que la aplicación puede volver a recuperar. Dado
+            que http es un protocolo sin estado, cada petición http es independiente de la anterior. Las cookies se envían automáticamente en la cabecera de cada petición permitiendo a las aplicaciones
+            recordar aspectos de peticiones anteriores gracias a los datos que han grabado en las cookies.
+        </p>
+        <p>Cada cookie puede grabar como mucho 4KB de datos y se permiten 20 cookies por dominio.
+            Suelen ser suficiente estas restricciones con casi cualquier tipo de aplicación.
+        </p>
+        <p>Todos los usuarios europeos de Internet han oído hablar de las cookies, ya que en la Unión
+            Europea hay una directiva relativa a su uso que obliga a las aplicaciones web a pedir permiso al
+            usuario antes de poder grabar cookies. Ese aviso tiene que incluir una explicación (o un enlace a
+            la explicación) que aclare la utilización y necesidad que la aplicación requiere de las cookies.
+        </p>
+        <p>En realidad, esta directiva distingue entre las cookies técnicamente necesarias y las no necesarias. Las primeras son imprescindibles para el correcto funcionamiento de la aplicación. Un
+            ejemplo de este tipo de cookies son las que graban los datos de inicio de sesión del usuario que es
+            clave para que ese usuario acceda a su carrito de la compra o a su espacio personal. Las cookies
+            técnicamente necesarias, se permite que se graben directamente y que luego se pida permiso al
+            usuario. Si el usuario deniega el permiso habría que borrarlas y, siendo imprescindibles, la aplicación dejará de trabajar con normalidad, pudiendo incluso redirigir al usuario a una página en
+            blanco.
+        </p>
+        <p>Las cookies que, según la UE, se consideran técnicamente no necesarias son las cookies de
+            seguimiento y de análisis de la acción del usuario. Estas no se pueden utilizar antes de pedir permiso al usuario.
+        </p>
+        <p>La controversia y el uso malévolo por parte de algunos servicios de las cookies, las ha creado
+            mala fama, por lo que muchas aplicaciones para almacenar los datos no imprescindibles utilizan
+            otras opciones como, por ejemplo, la API localStorage que tiene más posibilidades para almacenar datos.
+        </p>
+        <p>En todo caso, las cookies siguen siendo la opción habitual para almacenar datos relacionados
+            con la identificación del usuario ya que, como hemos comentado, tienen la ventaja de enviarse
+            automáticamente como datos anexos en cada petición http, tanto del cliente como del servidor.
+        </p>
+    </div>
+
+    <script>
+        function highlightWord() {
+            // Obtener la palabra que se está buscando
+            var searchTerm = document.getElementById('buscador').value;
+
+            // Limpiar las marcas de resaltado anteriores
+            var content = document.getElementById('content');
+            var paragraphs = content.getElementsByTagName('p');
+
+            for (var i = 0; i < paragraphs.length; i++) {
+                var p = paragraphs[i];
+                p.innerHTML = p.innerHTML.replace(/<span class="highlight">/g, "").replace(/<\/span>/g, "");
+            }
+
+            if (searchTerm) {
+                // Crear una expresión regular para encontrar la palabra y resaltarla
+                var regex = new RegExp('(' + searchTerm + ')', 'gi');
+
+                for (var i = 0; i < paragraphs.length; i++) {
+                    var p = paragraphs[i];
+                    p.innerHTML = p.innerHTML.replace(regex, '<span class="highlight">$1</span>');
+                }
+
+                // Hacer scroll hacia la primera ocurrencia
+                var highlighted = content.querySelector('.highlight');
+                if (highlighted) {
+                    highlighted.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }
+        }
+    </script>
+</body>
+</html>
