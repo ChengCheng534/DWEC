@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Palabras</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            text-align: center;
+        }
+        .list-container {
+            margin-top: 20px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            padding: 5px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Lista de Palabras</h1>
+    <div class="list-container">
+        <ul id="word-list">
+            <li>Manzana</li>
+            <li>Zanahoria</li>
+            <li>Banana</li>
+            <li>Durazno</li>
+            <li>Kiwi</li>
+            <li>Fresa</li>
+            <li>Mandarina</li>
+            <li>Arándano</li>
+            <li>Uva</li>
+            <li>Piña</li>
+            <li>Melón</li>
+            <li>Cereza</li>
+        </ul>
+    </div>
+
+    <script>
+        // Mostrar mensaje de confirmación después de 3 segundos
+        setTimeout(() => {
+            const confimar = confirm("¿Quieres ordenar la lista alfabéticamente?");
+            if (confimar == true) {
+                sortList();
+            }
+        }, 3000);
+
+        // Función para ordenar la lista alfabéticamente
+        const sortList = () => {
+            const list = document.getElementById('word-list');
+            const items = Array.from(list.getElementsByTagName('li'));
+            const sortedItems = items.sort((a, b) => a.textContent.localeCompare(b.textContent));
+
+            // Limpiar lista y volver a añadir los elementos ordenados
+            list.innerHTML = '';
+            sortedItems.forEach(item => list.appendChild(item));
+        };
+    </script>
+</body>
+</html>

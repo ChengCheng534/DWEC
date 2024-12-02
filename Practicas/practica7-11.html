@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Lista de Palabras</h1>
+    <ul id="listas">
+        <li>Ordenador</li>
+        <li>Teclado</li>
+        <li>Placa Base</li>
+        <li>Pantalla</li>
+        <li>Monitor</li>
+        <li>Ratón</li>
+        <li>Cable SATA</li>
+        <li>Enchufe</li>
+        <li>Disco duro</li>
+        <li>Memoria ram</li>
+        <li>Procesador</li>
+        <li>Fuente alimentación</li>
+        <li>Pila</li>
+        <li>Cámara</li>
+        <li>Altavoz</li>
+    </ul>
+    <script>
+        // Mostrar mensaje de confirmación después de 3 segundos
+        setTimeout(() => {
+            const confirmar = confirm("¿Quieres ordenar la lista alfabéticamente?");
+            if (confirmar == true) {
+                ordenarListas();
+            }
+        }, 3000);
+
+        // Función para ordenar la lista alfabéticamente
+        const ordenarListas = () => {
+            const lista = document.getElementById('listas');
+            const articulos = Array.from(lista.getElementsByTagName('li'));
+            const ordenarArticulos = articulos.sort((a, b) => a.textContent.localeCompare(b.textContent));
+
+            // Limpiar lista y volver a añadir los elementos ordenados
+            lista.innerHTML = '';
+            ordenarArticulos.forEach(articulo => lista.appendChild(articulo));
+        };
+    </script>
+</body>
+</html>
