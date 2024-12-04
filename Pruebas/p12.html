@@ -1,0 +1,49 @@
+<!-- Ejercicio -->
+<!-- Obtener todos los atributos de una página html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reordenar Párrafos</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    p {
+      margin: 10px 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>Reordenar Párrafos</h1>
+  <div id="parrafos">
+    <p id="p1">Este es el párrafo 1.</p>
+    <p id="p2">Este es el párrafo 6.</p>
+    <p id="p3">Este es el párrafo 3.</p>
+    <p id="p4">Este es el párrafo 3.</p>
+    <p id="p5">Este es el párrafo 5.</p>
+    <p id="p6">Este Ls el párrafo 6.</p>
+    
+  </div>
+  <script>
+    // Obtener todos los elementos de la página
+        const allElements = document.querySelectorAll("*");
+
+        // Iterar sobre cada elemento y obtener sus atributos
+        allElements.forEach((element) => {
+            // Obtener los atributos de un elemento como un NamedNodeMap
+            const attributes = element.attributes;
+
+            // Mostrar los atributos si existen
+            if (attributes.length > 0) {
+                console.log(`Elemento: <${element.tagName.toLowerCase()}>`);
+                Array.from(attributes).forEach(attr => {
+                    console.log(` - ${attr.name}: ${attr.value}`);
+                });
+            }
+        });
+  </script>
+</body>
+</html>
