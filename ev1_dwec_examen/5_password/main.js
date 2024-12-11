@@ -81,3 +81,104 @@ const caracteresEspeciales = ["!", "#", "$", "&", "@", "_", "-", "(", "=", "?"];
 /* [0.5] Pedir al usuario la que elija una opción,
    comprobar que la opción es correcta y si no lo es advertirle,
    repetir hasta que elija terminar */
+
+// Función para generar un número aleatorio dentro de un rango
+function numeroAleatorio(max) {
+  return Math.floor(Math.random() * max);
+}
+
+// [1] Generar un password débil
+function generarPasswordDebil() {
+  let password = "";
+
+  // Agregar 5 letras aleatorias
+  for (let i = 0; i < 5; i++) {
+    password += letras[numeroAleatorio(letras.length)];
+  }
+
+  // Agregar 3 números aleatorios
+  for (let i = 0; i < 3; i++) {
+    password += numeros[numeroAleatorio(numeros.length)];
+  }
+
+  return password;
+}
+
+// [1.5] Generar un password fuerte
+function generarPasswordFuerte() {
+  const usado = new Set(); // Para asegurar que no se repitan caracteres
+  let password = "";
+
+  // Agregar un carácter especial al inicio
+  let caracterEspecial;
+  do {
+    caracterEspecial = caracteresEspeciales[numeroAleatorio(caracteresEspeciales.length)];
+  } while (usado.has(caracterEspecial));
+  usado.add(caracterEspecial);
+  password += caracterEspecial;
+
+  // Agregar una letra mayúscula
+  let letraMayuscula;
+  do {
+    letraMayuscula = letras.filter(c => c === c.toUpperCase())[numeroAleatorio(27)];
+  } while (usado.has(letraMayuscula));
+  usado.add(letraMayuscula);
+  password += letraMayuscula;
+
+  // Agregar 5 letras minúsculas
+  for (let i = 0; i < 5; i++) {
+    let letraMinuscula;
+    do {
+      letraMinuscula = letras.filter(c => c === c.toLowerCase())[numeroAleatorio(27)];
+    } while (usado.has(letraMinuscula));
+    usado.add(letraMinuscula);
+    password += letraMinuscula;
+  }
+
+  // Agregar 4 números
+  for (let i = 0; i < 4; i++) {
+    let numero;
+    do {
+      numero = numeros[numeroAleatorio(numeros.length)];
+    } while (usado.has(numero));
+    usado.add(numero);
+    password += numero;
+  }
+
+  // Agregar 2 caracteres especiales restantes
+  for (let i = 0; i < 2; i++) {
+    let caracter;
+    do {
+      caracter = caracteresEspeciales[numeroAleatorio(caracteresEspeciales.length)];
+    } while (usado.has(caracter));
+    usado.add(caracter);
+    password += caracter;
+  }
+
+  return password;
+}
+
+// [0.5] Interacción con el usuario
+function main() {
+  let opcion;
+  do {
+    console.log("Elige una opción:");
+    console.log("1: Generar password débil");
+    console.log("2: Generar password fuerte");
+    console.log("3: Terminar");
+    opcion = prompt("Introduce una opción (1, 2 o 3):");
+
+    if (opcion === "1") {
+      console.log("Password débil: " + generarPasswordDebil());
+    } else if (opcion === "2") {
+      console.log("Password fuerte: " + generarPasswordFuerte());
+    } else if (opcion !== "3") {
+      console.log("Opción no válida. Por favor, intenta de nuevo.");
+    }
+  } while (opcion !== "3");
+
+  console.log("Programa terminado.");
+}
+
+// Llamar a la función principal
+main();
