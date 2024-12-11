@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 1</title>
+</head>
+<body>
+    <script>
+        //Ejercicio 2. 1,5 puntos 
+            //a)  Crea un array de 300 números comprendidos entre el 1 y el 35 generados aleatoriamente y visualiza el array por consola.
+            //b) Calcula cuál es el valor  moda del conjunto de los datos y muéstralo por consola.
+            //c)  Calcula cuál es el número de veces que más se repite o frecuencia del valor moda y muéstralo por consola.
+            //d)  Ordena de menor a mayor el array generado aleatoriamente y muéstralo por consola. 
+
+        //Nota.El valor moda es aquel dato que aparece con mayor frecuencia o que más veces se repite en un conjunto de datos.
+    
+        const numAleatorio = Array.from({ length: 300 }, numero => Math.floor(Math.random() * 35) + 1);
+
+        console.log(numAleatorio);
+    </script>
+</body>
+</html>

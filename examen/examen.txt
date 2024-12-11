@@ -1,0 +1,72 @@
+Ejercicio 1.                                                                                           1,5 puntos
+a)   Crea un array de 100  objetos tal que cada objeto tiene 3 propiedades: id, nombre y edad.
+La propiedad id será un número que comienza en 1 y se incrementa paulatinamente: 1, 2, 3,…..,100.
+La propiedad nombre será una cadena de texto como  ‘persona1’, ‘persona 2’, ’persona3’,…….,’persona100´.
+La propiedad edad será aleatoria entre 18 y 60 años.
+Muestra por consola el array.
+b) Conservando los datos originales ordena el array de objetos por edad de menor a mayor edad y muestra por consola los datos ordenados.
+c) Conservando los datos ordenados muestra por consola solo aquellas personas que tengan 45, 46 y 47 años.  
+
+Nota: Realizar los  console.log  de los array por iteración.
+
+
+Ejercicio 2.                                                                                           1,5 puntos 
+a)  Crea un array de 300 números comprendidos entre el 1 y el 35 generados aleatoriamente y visualiza el array por consola.
+b) Calcula cuál es el valor  moda del conjunto de los datos y muéstralo por consola.
+c)  Calcula cuál es el número de veces que más se repite o frecuencia del valor moda y muéstralo por consola.
+d)  Ordena de menor a mayor el array generado aleatoriamente y muéstralo por consola. 
+
+Nota.
+El valor moda es aquel dato que aparece con mayor frecuencia o que más veces se repite en un conjunto de datos.
+
+Ejercicio 3.                                                                                               1 punto
+Dado el siguiente array 
+
+const  semiconductores = [
+	{
+		referencia:   “REF1”,
+		fecha: new Date(“2020-03-19”),
+	},
+	{
+		referencia:   “REF2”,
+		fecha: new Date(“2019-04-19”),
+	},
+	{
+		referencia:   “REF3”,
+		fecha: new Date(“2021-4-24”),
+	},
+	{
+		referencia:   “REF4”,
+		fecha: new Date(“2020-07-19”),
+	},
+	{
+		referencia:   “REF5”,
+		fecha: new Date(“2023-03-19”),
+	},
+	{
+		referencia:   “REF6”,
+		fecha: new Date(“2022-03-19”),
+	},
+{
+		referencia:   “REF7”,
+		fecha: new Date(“2022-07-20”),
+	},
+	{
+		referencia:   “REF7”,
+		fecha: new Date(“2023-12-20”),
+	},
+
+];
+
+a)  Ordenar el array por fechas y visualizarlo por consola.
+b)  Obtener los productos con menos de 1 año de antigüedad y visualizarlo por consola.
+
+
+
+
+
+
+Ejercicio 4.                                                                                              2 puntos
+Los siguientes puntos (x,y)  del sistema cartesiano  (-3,-3)  (3,-3) (4,3) (1,5) y 
+(-4,2) unidos entre si forman un polígono irregular de 5 lados.  
+Calcular su perímetro y mostrar la magnitud con 2 decimales por consola.

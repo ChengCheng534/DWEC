@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // Crear dos fechas
+        const fecha1 = new Date("2024-12-01");
+        const fecha2 = new Date("2024-12-11");
+
+        // Obtener la diferencia en milisegundos
+        const diferenciaMilisegundos1 = fecha2 - fecha1;
+
+        // Convertir la diferencia a días
+        const milisegundosPorDia1 = 1000 * 60 * 60 * 24;
+        const diferenciaDias = diferenciaMilisegundos1 / milisegundosPorDia;
+
+        console.log(`La diferencia entre las fechas es de ${diferenciaDias} días.`);
+
+        ////////////////////////////////////////////////////////////////////////////
+        const fechaInicio = new Date("2024-12-01T12:00:00");
+        const fechaFin = new Date("2024-12-11T15:30:00");
+
+        // Obtener la diferencia en milisegundos
+        const diferenciaMilisegundos = fechaFin - fechaInicio;
+
+        // Calcular los días, horas, minutos y segundos
+        const milisegundosPorSegundo = 1000;
+        const milisegundosPorMinuto = milisegundosPorSegundo * 60;
+        const milisegundosPorHora = milisegundosPorMinuto * 60;
+        const milisegundosPorDia = milisegundosPorHora * 24;
+
+        const dias = Math.floor(diferenciaMilisegundos / milisegundosPorDia);
+        const horas = Math.floor((diferenciaMilisegundos % milisegundosPorDia) / milisegundosPorHora);
+        const minutos = Math.floor((diferenciaMilisegundos % milisegundosPorHora) / milisegundosPorMinuto);
+        const segundos = Math.floor((diferenciaMilisegundos % milisegundosPorMinuto) / milisegundosPorSegundo);
+
+        console.log(`Diferencia: ${dias} días, ${horas} horas, ${minutos} minutos, ${segundos} segundos.`);
+    </script>
+</body>
+</html>

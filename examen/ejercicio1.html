@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 2</title>
+</head>
+<body>
+    <script>
+        //Ejercicio 1. 1,5 puntos
+            //a)   Crea un array de 100  objetos tal que cada objeto tiene 3 propiedades: id, nombre y edad.
+                //La propiedad id será un número que comienza en 1 y se incrementa paulatinamente: 1, 2, 3,…..,100.
+                //La propiedad nombre será una cadena de texto como  ‘persona1’, ‘persona 2’, ’persona3’,…….,’persona100´.
+                //La propiedad edad será aleatoria entre 18 y 60 años.
+                //Muestra por consola el array.
+            //b) Conservando los datos originales ordena el array de objetos por edad de menor a mayor edad y muestra por consola los datos ordenados.
+            //c) Conservando los datos ordenados muestra por consola solo aquellas personas que tengan 45, 46 y 47 años.  
+
+        //Nota: Realizar los  console.log  de los array por iteración.
+
+        for (let index = 1; index < 100+1; index++) {
+            const objetos = [
+                {
+                    id: index,
+                    nombre: "persona"+index,
+                    edad: Math.floor(Math.random(18) * 60)
+                }
+            ]
+            const objetosOrdenado = [objetos].sort((a, b) => a.edad - b.edad);
+            console.log(objetos);
+        }
+
+    </script>
+</body>
+</html>
