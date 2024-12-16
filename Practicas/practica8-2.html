@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imagen tras tecla</title>
+    <style>
+        /* Estilo para el contenedor */
+        #imagen {
+            background-color: black;
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Estilo para el mensaje */
+        h1 {
+            color: white;
+            text-align: center;
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div id="imagen">
+        <h1>Pulsa <kbd>Alt + F12</kbd> para cambiar la imagen de fondo</h1>
+    </div>
+    <script>
+        // Escucha el evento 'keyup' para detectar cuando se suelta una tecla
+        document.body.addEventListener("keyup", function(ev) {
+            // Verifica si la combinación Alt + F12 fue presionada
+            if (ev.altKey && ev.key === "F12") {
+                // Selecciona el contenedor de la imagen
+                const capa = document.getElementById("imagen");
+                // Cambia el fondo con una imagen de la carpeta local 'imagen'
+                capa.style.backgroundImage = "url('imagen/imagen.jpg')";
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Práctica 8.2: Fondo con tecla Alt+F12</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        #message {
+            font-size: 1.5rem;
+            max-width: 80%;
+        }
+
+        .background-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+    </style>
+</head>
+<body>
+    <div id="message">
+        Pulsa <strong>Alt + F12</strong> para colocar una imagen de fondo.
+    </div>
+
+    <script>
+        document.addEventListener("keydown", function(event) {
+            // Verifica si Alt y F12 están presionados
+            if (event.altKey && event.code === "F12") {
+                // Crea una imagen de fondo dinámicamente
+                const body = document.body;
+                body.style.backgroundImage = "url('https://source.unsplash.com/random')";
+                body.style.backgroundSize = "cover";
+                body.style.backgroundPosition = "center";
+                body.style.backgroundRepeat = "no-repeat";
+
+                // Elimina el mensaje
+                const message = document.getElementById("message");
+                message.style.display = "none";
+            }
+        });
+    </script>
+</body>
+</html>

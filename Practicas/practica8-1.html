@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cartel que persigue al ratón</title>
+</head>
+<body>
+    <h1>Bienvenido/a</h1>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris. Fusce euismod nunc et risus tempus, a consequat arcu volutpat.</p>
+    <p>Curabitur non elit nec eros tincidunt fringilla. Proin molestie malesuada mi a volutpat. Integer dignissim, nunc non consectetur gravida, erat ligula fringilla purus, at elementum elit massa eget libero.</p>
+    <p>Vivamus bibendum malesuada libero, id gravida justo gravida non. Sed ut urna convallis, interdum nisi ut, tincidunt lacus.</p>
+    <p>Aenean vel eros nec augue malesuada gravida. Integer tincidunt, libero id viverra vehicula, ligula velit ultricies sapien, vitae tincidunt metus sapien et velit.</p>
+    <p>Nam vehicula tortor vel dui efficitur, nec gravida sem suscipit. Integer pellentesque sapien non sem elementum, nec tristique nunc fermentum.</p>
+    <p>Mauris eu justo nec mauris fringilla ultricies non non urna. Donec sed fermentum urna, quis congue nisl.</p>
+    <p>Aliquam erat volutpat. Ut tristique metus at nisl varius, a auctor est bibendum. Nulla facilisi. Etiam vel nulla sed metus fermentum pulvinar id nec tortor.</p>
+
+    <div class="tooltip" id="tooltip">Hola</div>
+
+    <script>
+        // Seleccionar el elemento del tooltip
+        const tooltip = document.getElementById('tooltip');
+
+        // Agregar un evento de movimiento del ratón al documento
+        document.addEventListener('mousemove', (event) => {
+            const x = event.pageX + 10; // Posición en X con un margen
+            const y = event.pageY + 10; // Posición en Y con un margen
+
+            // Mover el tooltip a la posición del cursor
+            tooltip.style.left = `${x}px`;
+            tooltip.style.top = `${y}px`;
+        });
+    </script>
+</body>
+</html>
