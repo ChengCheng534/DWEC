@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+    function verificarNumeroAleatorio() {
+        return new Promise((resolve, reject) => {
+            const numero = Math.random();
+            console.log(`Número generado: ${numero}`);
+            if (numero > 0.5) {
+                resolve("Promesa cumplida: el número es mayor que 0.5");
+            } else {
+                reject("Promesa fallida: el número es menor o igual a 0.5");
+            }
+        });
+    }
+
+    // Llamar a la promesa
+    verificarNumeroAleatorio()
+        .then((mensaje) => console.log(mensaje))
+        .catch((error) => console.error(error));
+
+    </script>
+</body>
+</html>

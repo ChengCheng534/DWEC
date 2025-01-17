@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Lectura de numero</title>
+</head>
+<body>
+<script>
+    // Crear una promesa
+    const miPromesa = new Promise((resolve, reject) => {
+      // Simular una operación asíncrona (por ejemplo, una petición a una API)
+      setTimeout(() => {
+        const exito = Math.random() > 0.5;
+        const h1 = Math.random();
+        console.log(h1);
+
+        console.log(exito);
+        if (exito) {
+          resolve('¡Operación exitosa!');
+        } else {
+          reject('¡Error en la operación!');
+        }
+      }, 3000);
+    });
+
+    // Función asincrónica para manejar la promesa
+    const manejarPromesa = async () => {
+      try { //COWBOY DEL INFIERNO
+        const resultado = await miPromesa; // Esperamos a que la promesa se resuelva
+        console.log(resultado); // Se ejecutará si la promesa se resuelve correctamente
+      } catch (error) {
+        console.error(error); // Se ejecutará si la promesa se rechaza
+      }
+    };
+
+    // Llamamos a la función asincrónica
+    manejarPromesa();
+</script>

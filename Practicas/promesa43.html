@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Lectura de numero</title>
+</head>
+<body>
+<script>
+async function executePromise() {
+  try {
+    const result = await new Promise((resolve, reject) => {
+      setTimeout(() => {
+        const success = Math.random() > 0.5;
+        const h1 = Math.random();
+        console.log(h1);
+        console.log(success);
+        if (success) {
+          resolve('¡Operación exitosa!');
+        } else {
+          reject('¡Error en la operación!');
+        }
+      }, 3000);
+    });
+    console.log(result);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+executePromise();
+</script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Async/Await</title>
+</head>
+<body>
+<script>
+    let miPromesa = new Promise((resolve, reject) => {
+        // Simulamos una operación asíncrona
+        let exito = true;  // Cambiar a false para probar la promesa rechazada
+
+        if (exito) {
+            resolve("¡Operación exitosa!");
+        } else {
+            reject("Hubo un error en la operación.");
+        }
+    });
+
+    // Función asincrónica que maneja la promesa
+    async function manejarPromesa() {
+        try {
+            let resultado = await miPromesa;  // Esperamos el resultado de la promesa
+            console.log(resultado);  // Si la promesa es resuelta
+        } catch (error) {
+            console.error(error);  // Si la promesa es rechazada
+        }
+    }
+
+    // Llamamos a la función
+    manejarPromesa();
+</script>
+</body>
+</html>
