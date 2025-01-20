@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedido Pizza</title>
+</head>
+<body>
+    <script>
+        // Función para realizar pedido
+        function realizarPedido(producto){
+            return new Promise((resolve, reject) => {
+                console.log("Realizando tu pedido...");
+
+                setTimeout(()=>{
+                    if (producto){
+                        resolve("-Pedido recibido de: "+producto);
+                    } else {
+                        reject("Error en realizar el pedido...");
+                    }
+                }, "1000"); 
+            }
+        )}
+
+        function prepararPedido(producto){
+            return new Promise((resolve, reject) => {
+                console.log("Preparando tu pedido...")
+
+                const preparado = true;
+                setTimeout(()=>{
+                    if (preparado){
+                        resolve("Tu pedido de "+producto+" está listo");
+                    } else {
+                        reject("Error en preparar el pedido...");
+                    }
+                }, "3000"); 
+            })
+        }
+
+        function entregarPedido(mensaje){
+            return new Promise((resolve) => {
+                console.log("Entregando tu pedido...");
+                setTimeout(() => {
+                    resolve(`Pedido entregado: ${mensaje}`);
+                }, 2000);
+            });
+        }
+
+        realizarPedido("Pizza")
+            .then((producto) => prepararPedido(producto))
+            .then((mensajePreparado) => entregarPedido(mensajePreparado))
+            .then((mensajeEntregado) => console.log(mensajeEntregado))
+            .catch((error) => console.error(error));
+    </script>
+</body>
+</html>

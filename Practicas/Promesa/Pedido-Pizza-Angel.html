@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // Simulando un pedido
+        function realizarPedido(producto) {
+            return new Promise((resolve, reject) => {
+                console.log(`Pedido recibido para el producto: ${producto}`);
+                setTimeout(() => {
+                    const exito = true;  // Cambiar a false para simular un fallo en el pedido
+                    if (exito && producto.length != 0) {
+                        resolve(producto);  // El pedido se realiza con éxito
+                    } else {
+                        reject("Error al realizar el pedido");
+                    }
+                }, 1000); // Simulamos 1 segundo para realizar el pedido
+            });
+        }
+
+        // Simulando la preparación del producto
+        function prepararProducto(producto) {
+            return new Promise((resolve, reject) => {
+                console.log(`Preparando el producto: ${producto}`);
+                setTimeout(() => {
+                    const exito = true;  // Cambiar a false para simular un fallo en la preparación
+                    if (exito) {
+                        resolve(producto);  // El producto está listo para la entrega
+                    } else {
+                        reject("Error al preparar el producto");
+                    }
+                }, 2000); // Simulamos 2 segundos para preparar el producto
+            });
+        }
+
+        // Simulando la entrega del producto
+        function entregarProducto(producto) {
+            return new Promise((resolve, reject) => {
+                console.log(`Entregando el producto: ${producto}`);
+                setTimeout(() => {
+                    const exito = true;  // Cambiar a false para simular un fallo en la entrega
+                    if (exito) {
+                        resolve(`Producto ${producto} entregado con éxito`);
+                    } else {
+                        reject("Error en la entrega del producto");
+                    }
+                }, 1500); // Simulamos 1.5 segundos para entregar el producto
+            });
+        }
+
+        // Cadena de promesas para simular todo el proceso
+        function procesarPedido(producto) {
+            realizarPedido(producto)
+                .then((productoPedido) => {
+                    return prepararProducto(productoPedido);  // Preparar el producto después de realizar el pedido
+                })
+                .then((productoPreparado) => {
+                    return entregarProducto(productoPreparado);  // Entregar el producto después de la preparación
+                })
+                .then((mensajeEntrega) => {
+                    console.log(mensajeEntrega);  // Finaliza el proceso con la entrega exitosa
+                })
+                .catch((error) => {
+                    console.error(`Error en el proceso: ${error}`);  // Si algo falla en cualquiera de los pasos
+                });
+        }
+
+        // Simulamos el proceso con un producto específico
+        procesarPedido("Smartphone");
+
+    </script>
+</body>
+
+</html>
