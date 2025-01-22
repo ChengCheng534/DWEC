@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventario</title>
+</head>
+<body>
+    <script>
+    //SIMULACION DE UN INVENTARIO
+
+        //Estructura de datos --> inventario
+        const inventario = new Map();
+
+        inventario.set("Procesador", 2);
+        inventario.set("Placa Base", 12);
+        inventario.set("Tarjeta Gráfica", 8);
+        inventario.set("Fuente Alimentación", 4);
+        inventario.set("Memoria Ram", 16);
+
+        function verInventario(inventario){
+            inventario.forEach((cantidad, producto) => {
+                console.log(`Producto: ${producto}`);
+                console.log(`-Cantidad: ${cantidad}`);
+            });
+        }
+
+        function verificarInventario(producto, cantidadPedido){
+            return new Promise((resolve, reject)=>{
+                console.log("Verificando inventario...")
+
+                setTimeout(() => {
+                    if (inventario.has(producto)) {
+                        const cantidadDisponible = inventario.get(producto);
+
+                        if (cantidadPedido > cantidadDisponible) {
+                            reject(`La cantidad solicitada ${cantidadPedido} supera la cantidad disponible ${cantidadDisponible}.`);
+                        } else {
+                            resolve(`--Pedido aprobado para ${cantidadPedido} unidades de ${producto}.`);
+                        }
+                    } else {
+                        reject(`No existe el producto ${producto} en el inventario.`);
+                    }
+                }, 1000);
+            })
+        }
+
+        function procesarPago(numeroPago){
+            return new Promise((resolve, reject) => {
+                console.log("Procesar tu pedido...")
+
+                const preparado = true;
+                setTimeout(()=>{
+                    if (numeroPago<8){
+                        resolve("--Tu pedido de ha sido pagado con exito.");
+                    } else {
+                        reject("Error en pago de pedido");
+                    }
+                }, "2000"); 
+            })
+        }
+
+        function confirmarPedido(inventario){
+            return new Promise((resolve) =>{
+                console.log("Entregando tu pedido...");
+                setTimeout(() => {
+                    resolve(`--Pedido de ${inventario}: Entregado.`);
+                }, 2000);
+            })
+        }
+
+        const cantidadSolicitada = Math.floor(Math.random() * 20) + 1;
+        const numeroPago = Math.floor(Math.random() * 10) + 1;
+
+        verificarInventario("Placa Base", cantidadSolicitada)
+            .then((mensajeInventario) => {
+                console.log(mensajeInventario);
+                return procesarPago(numeroPago);
+            })
+            .then((mensajePago) => {
+                console.log(mensajePago);
+                return confirmarPedido("Placa Base");
+            })
+            .then((mensajeConfirmacion) => {
+                console.log(mensajeConfirmacion);
+            })
+            .catch((error) => {
+                console.error(error);
+            })
+        ;
+    </script>
+</body>
+</html>

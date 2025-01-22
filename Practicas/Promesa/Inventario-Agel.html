@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let inv = new Map();
+        inv.set("patatas","213");
+        inv.set("azucar","1233");
+        function retardoAleatorio() {
+            return new Promise(resolve => {
+                const tiempo = Math.floor(Math.random() * 5000) + 1000; // entre 1 y 5 segundos
+                setTimeout(resolve, tiempo);
+            });
+        }
+        
+        function verificarInv(producto,cantidad) {
+            return new Promise((resolve, reject) => {
+                console.log(`Revisando que haya suficiente ${producto} en el inventario...`);
+                setTimeout(() => {
+                    if (inv.has(producto)) {
+                        if (inv.get(producto)>=cantidad) {
+                            resolve(producto);
+                        } else {
+                            reject(`No hay suficiente cantidad de ${producto} en el inventario...`);
+                        }
+                    } else {
+                        reject("Ha habido un error al revisar el inventario.");
+                    }
+                }, 3000);
+            })
+        };
+        
+        function procesarPago(producto) {
+            return new Promise((resolve, reject) => {
+                console.log(`Procesando el pago del producto: ${producto}`);
+                setTimeout(() => {
+                    if ((Math.floor(Math.random() * 100) + 1)<=90) {
+                        resolve(producto);
+                    } else {
+                        reject("Pago rechazado");
+                    }
+                }, 3000);
+            });
+        }
+        
+        function envioProducto(producto) {
+            return new Promise((resolve, reject) => {
+                console.log(`Enviando el producto: ${producto}`);
+                setTimeout(() => {
+                    let exito = true;
+                    if (exito) {
+                        resolve(`Producto ${producto} entregado con éxito`);
+                    } else {
+                        reject("Ha habido un error con la entrega del producto");
+                    }
+                }, 3000);
+            });
+        }
+        
+        function procesarPedido(producto,cantidad) {
+            verificarInv(producto,cantidad)
+                .then((productoPedido) => {
+                    return procesarPago(productoPedido);  // Preparar el producto después de realizar el pedido
+                })
+                .then((productoPreparado) => {
+                    return (envioProducto(productoPreparado));  // Entregar el producto después de la preparación
+                })
+                .then((productoEnviado) => {
+                    console.log(productoEnviado);  // Entregar el producto después de la preparación
+                })
+                .catch((error) => {
+                    console.error(`Error en el proceso: ${error}`);  // Si algo falla en cualquiera de los pasos
+                });
+        }
+        
+        procesarPedido("azucar",220);
+    </script>
+</body>
+</html>
