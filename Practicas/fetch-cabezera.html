@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Lectura de numero</title>
+</head>
+<body>
+<script>
+    function fetchAndShowCommits() {
+        fetch('https://api.github.com/repos/javascript-tutorial/en.javascript.info/commits')
+            .then(response => {
+                if (!response.ok) {
+                    console.error("Error en la respuesta: ", response.status);
+                    return Promise.reject("Error en la respuesta");
+                }
+
+                // Obtener Content-Type y Content-Length de los encabezados
+                const contentType = response.headers.get('Content-Type');
+                const contentLength = response.headers.get('Content-Length');
+
+                // Imprimir los valores en consola
+                console.log("Content-Type:", contentType);
+                console.log("Content-Length:", contentLength);
+
+                console.log(response.status); // Imprime el estado de la respuesta
+                return response.text(); // Leer cuerpo de la respuesta como texto
+            })
+            .then(text => {
+                alert(text.slice(0, 2000) + '...');
+                let h = text.slice(0, 2000);
+                console.log("+++++++++++");
+                console.log(h);
+            })
+            .catch(error => {
+                console.error("Error al realizar el fetch:", error);
+            });
+    }
+    
+    fetchAndShowCommits();
+</script>
+</body>
+</html>

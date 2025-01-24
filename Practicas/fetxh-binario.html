@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio</title>
+</head>
+<body>
+    <script>
+        // Hacer la solicitud fetch
+        fetch('https://api.github.com/repos/javascript-tutorial/en.javascript.info/commits')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.text(); 
+            })
+            .then(data => {
+                
+                const jsonString = JSON.stringify(data, null, 2); 
+                const result = jsonString.substring(0, 2000); 
+
+                let binaryResult = '';
+                for (let i = 0; i < result.length; i++) {
+                    binaryResult += result.charCodeAt(i).toString(2).padStart(8, '0') + ' '; // Convertir cada caracter a binario
+                }
+
+                console.log(binaryResult); 
+                alert(binaryResult); 
+            })
+            .catch(error => {
+                console.error('Error al realizar la solicitud:', error);
+            });
+
+    </script>
+</body>
+</html>
