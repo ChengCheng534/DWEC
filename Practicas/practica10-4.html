@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Descargar Imagen AEMET</title>
+    <style>
+        /* Estilo para la imagen en horizontal */
+        img {
+            transform: rotate(90deg); /* Gira la imagen 90 grados en sentido horario */
+            max-width: 100%; /* Ajusta el ancho máximo de la imagen */
+            height: auto; /* Mantiene la relación de aspecto original */
+            display: block;
+            margin: 20px auto;
+        }
+        #boton {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        #download-btn:hover {
+            background-color: #45a049;
+        }
+        #metadatos {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f4f4f4;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Imagen del día de AEMET</h1>
+    <p>Haz clic en el siguiente botón para obtener y ver la imagen del análisis meteorológico de hoy:</p>
+    
+    <button id="boton">Obtener Imagen</button>
+
+    <div id="imagen"></div> <!-- Aquí se mostrará la imagen -->
+
+    <div id="metadatos"></div> <!-- Aquí se mostrarán los metadatos -->
+
+    <script>
+        //practica 10.4
+        //conseguir api_key con vuestro email, la dirección web viene en el enunciado de la práctica
+        //acceder a la pagina de la AEMET y descargarse la respuesta para obtener la url de 
+        // los mapas  de tiempo y la url de los metadatos
+        //iniciar la descarga al hacer clic en el boton correspondiente
+        //y descargarse el mapa metereológico y los metadatos del mapa
+        //por consiguiente en el navegador aparecera el mapa y debajo de dicho mapa
+        //los metadatos
+        //aquí en el siguiente parrafo está la dirección web de la AEMET le falta 
+        // la api_key vuestra
+        //fetch("https://opendata.aemet.es/opendata/api/mapasygraficos/analisis?api_key=)
+                
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
