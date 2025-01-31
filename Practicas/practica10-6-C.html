@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NASA Imagen del Día</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            text-align: center;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>NASA Imagen del Día</h1>
+    <div id="imagen-container">
+        <img id="imagen-del-dia" src="" alt="Imagen del día">
+        <p id="descripcion"></p>
+    </div>
+    <input type="date" id="fecha">
+    <button id="boton">Obtener Imagen</button>
+    <script>
+        // Almacenamos la API Key
+        const apiKey = 'ecZepNuTJf4Lt6nlwq9uounjQ76cOjTfuuY6b2mL';
+        
+        async function obtenerImagen() {
+            const fecha = document.getElementById('fecha').value;
+            const url = fecha ? `https://api.nasa.gov/planetary/apod?api_key=${apiKey}&date=${fecha}` : `https://api.nasa.gov/planetary/apod?api_key=${apiKey}`;
+
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+
+                if (!data || !data.url) {
+                    throw new Error('No se pudo obtener la imagen');
+                }
+
+                // Actualizamos la imagen del día
+                const imgElement = document.getElementById('imagen-del-dia');
+                imgElement.src = data.url;
+
+                // También mostramos la descripción
+                const descripcionElement = document.getElementById('descripcion');
+                descripcionElement.textContent = data.explanation;
+
+            } catch (error) {
+                console.error('Error al obtener los datos de NASA:', error);
+            }
+        }
+        // Cargar la imagen del día al cargar la página
+        window.onload = obtenerImagen;
+
+        // Evento al hacer click en el botón
+        document.getElementById('boton').addEventListener('click', obtenerImagen);
+    </script>
+</body>
+</html>

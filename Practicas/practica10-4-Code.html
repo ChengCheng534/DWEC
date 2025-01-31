@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Descargar Imagen AEMET</title>
+    <style>
+        /* Estilo para la imagen en horizontal */
+        img {
+            transform: rotate(90deg); /* Gira la imagen 90 grados en sentido horario */
+            max-width: 100%; /* Ajusta el ancho máximo de la imagen */
+            height: auto; /* Mantiene la relación de aspecto original */
+            display: block;
+            margin: 20px auto;
+        }
+        #boton {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        #download-btn:hover {
+            background-color: #45a049;
+        }
+        #metadatos {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f4f4f4;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Imagen del día de AEMET</h1>
+    <p>Haz clic en el siguiente botón para obtener y ver la imagen del análisis meteorológico de hoy:</p>
+    
+    <button id="boton">Obtener Imagen</button>
+
+    <div id="imagen"></div> <!-- Aquí se mostrará la imagen -->
+
+    <div id="metadatos"></div> <!-- Aquí se mostrarán los metadatos -->
+
+    <script>
+        // Función para obtener y mostrar la imagen de AEMET
+        document.getElementById("boton").addEventListener("click", function() {
+            fetch("https://opendata.aemet.es/opendata/api/mapasygraficos/analisis?api_key=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbGZvbnNvLmJlbHRyYW5tdXJvQGdtYWlsLmNvbSIsImp0aSI6ImJhODQ1YmNiLWEzOTAtNDMxOC05YzZmLWFhYzk3OTNlM2E4ZCIsImlzcyI6IkFFTUVUIiwiaWF0IjoxNzM4MDg1MTIyLCJ1c2VySWQiOiJiYTg0NWJjYi1hMzkwLTQzMTgtOWM2Zi1hYWM5NzkzZTNhOGQiLCJyb2xlIjoiIn0.39LGPuEGGZvGflCIDzaWXGQbermlbyRQvLZlVG4uamQ")
+                .then(response => response.json()) // Parseamos la respuesta JSON
+                .then(h => {
+                    console.log(JSON.stringify(h, null, 4));
+                    const imageUrl = h.datos; // Extraemos la URL de la imagen
+                    const metaDatos = h.metadatos;  // Obtenemos la URL de los metadatos
+
+                    // Usamos fetch nuevamente para obtener la imagen
+                    fetch(imageUrl)
+                        .then(response => response.blob()) // Convertimos la respuesta en un blob
+                        .then(h => {
+                            // Creamos un objeto URL para la imagen
+                            const imageObjectURL = URL.createObjectURL(h);
+
+                            // Mostramos la imagen en la página
+                            const img = document.createElement("img");
+                            img.src = imageObjectURL;
+                            img.alt = "Imagen del análisis meteorológico";
+                            document.getElementById("imagen").innerHTML = ''; // Limpiamos el contenedor
+                            document.getElementById("imagen").appendChild(img); // Insertamos la imagen
+
+                            // Creamos un enlace para descargar la imagen en el disco duro
+                            const k = document.createElement("a");
+                            k.href = imageObjectURL; // URL de la imagen
+                            k.download = "imagen_aemet.png"; // Nombre del archivo de descarga
+                            k.innerText = "Descargar Imagen";
+                            k.style.display = "block";
+                            k.style.margin = "20px auto";
+                            k.style.padding = "10px 20px";
+                            k.style.textAlign = "center";
+                            k.style.backgroundColor = "#4CAF50";
+                            k.style.color = "white";
+                            k.style.borderRadius = "5px";
+                            k.style.textDecoration = "none";
+
+                            document.getElementById("imagen").appendChild(k); // Insertamos el botón de descarga
+                        })
+                        .catch(error => {
+                            console.error("Error al obtener la imagen:", error);
+                        });
+
+                    // Usamos nuevamente fetch() para obtener los metadatos del mapa meteorológico
+                    fetch(metaDatos)
+                        .then(response => response.json())
+                        .then(h1 => {
+                            console.log("*****************METADATOS del mapa meteorológico******************");
+                            console.log(JSON.stringify(h1, null, 4));
+
+                            // Insertar los metadatos debajo del mapa
+                            const metadatosContainer = document.getElementById("metadatos");
+                            metadatosContainer.innerHTML = ""; // Limpiar cualquier contenido previo
+                            const ul = document.createElement("ul");
+                            
+                            // Recorremos los metadatos y los insertamos en una lista
+                            for (const key in h1) {
+                                //if (h1.hasOwnProperty(key)) {   ****hasOwnProperty*** no es necesario
+                                  if (h1[key]){
+                                    const li = document.createElement("li");
+                                    li.innerText = `${key}: ${h1[key]}`;
+                                    ul.appendChild(li);
+                                }
+                            }
+
+                            metadatosContainer.appendChild(ul); // Agregamos los metadatos a la página
+                        })
+                        .catch(error => {
+                            console.error("Error al obtener los metadatos: ", error);
+                        });
+                })
+                .catch(error => {
+                    console.error("Error al obtener los datos:", error);
+                });
+        });
+    </script>
+</body>
+</html>

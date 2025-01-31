@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NASA Imagen del Día</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            text-align: center;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>NASA Imagen del Día</h1>
+    <div id="imagen-container">
+        <img id="imagen-del-dia" src="" alt="Imagen del día">
+        <p id="descripcion"></p>
+    </div>
+    <input type="date" id="fecha">
+    <script>
+        const apiKey = '9SoFntfrFmKj3tGNZNXa9m6xfrjKezyrJFnDBa7L';
+        const imagenContainer = document.getElementById('imagen-container');
+        const imagenDelDia = document.getElementById('imagen-del-dia');
+        const descripcion = document.getElementById('descripcion');
+        const fechaInput = document.getElementById('fecha');
+
+        function obtenerImagen(fecha = '') {
+            let url = `https://api.nasa.gov/planetary/apod?api_key=${apiKey}`;
+            if (fecha) {
+                url += `&date=${fecha}`;
+            }
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(JSON.stringify(data,null,4));
+                    console.log("***********************");
+                    //obtenemos los datos del objeto devuelto en response.json() como parejas clave-valor
+                    for (let propiedad in data) {  
+                    console.log(`data.${propiedad}`);
+                    //console.log(`CLAVE: ${key} =>   VALOR: ${value}`);
+                    //console.log(`propiedad o campo: ${key},contenido del campo: ${value}`);
+                    }
+                    imagenDelDia.src = data.url;
+                    descripcion.textContent = data.explanation;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
+        fechaInput.addEventListener('change', () => {
+            const fecha = fechaInput.value;
+            obtenerImagen(fecha);
+        });
+
+        obtenerImagen();
+    </script>
+</body>
+</html>
