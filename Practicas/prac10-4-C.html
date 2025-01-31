@@ -49,6 +49,7 @@
     <script>
         document.getElementById("boton").addEventListener("click", async () => {
             const apiKey = prompt("Introduce tu API Key de AEMET:");
+            //const apikey = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjeXUwMUBsYXJpb2phLmVkdS5lcyIsImp0aSI6ImIyNGRjYTllLWVkYmUtNDhkMC05Yzg0LTE5MzM1MTRkYmY3OCIsImlzcyI6IkFFTUVUIiwiaWF0IjoxNzM4MTc2NDA3LCJ1c2VySWQiOiJiMjRkY2E5ZS1lZGJlLTQ4ZDAtOWM4NC0xOTMzNTE0ZGJmNzgiLCJyb2xlIjoiIn0.NfCWmX3XpiOWgD8gvwcM1RZUhmjxTTZDVSbGyt-Xy-c';
             if (!apiKey) {
                 alert("La API Key es obligatoria para obtener la información.");
                 return;

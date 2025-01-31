@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Descargar Imagen AEMET</title>
+    <style>
+        /* Estilo para la imagen en horizontal */
+        img {
+            transform: rotate(90deg); /* Gira la imagen 90 grados en sentido horario */
+            max-width: 100%; /* Ajusta el ancho máximo de la imagen */
+            height: auto; /* Mantiene la relación de aspecto original */
+            display: block;
+            margin: 20px auto;
+        }
+        #boton {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        #boton:hover {
+            background-color: #45a049;
+        }
+        #metadatos {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f4f4f4;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Imagen del día de AEMET</h1>
+    <p>Haz clic en el siguiente botón para obtener y ver la imagen del análisis meteorológico de hoy:</p>
+    
+    <button id="boton">Obtener Imagen</button>
+
+    <div id="imagen"></div> <!-- Aquí se mostrará la imagen -->
+
+    <div id="metadatos"></div> <!-- Aquí se mostrarán los metadatos -->
+
+    <script>
+        // Función async para obtener la imagen y los metadatos de AEMET
+        async function obtenerImagen() {
+            const apiKey = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjeXUwMUBsYXJpb2phLmVkdS5lcyIsImp0aSI6ImIyNGRjYTllLWVkYmUtNDhkMC05Yzg0LTE5MzM1MTRkYmY3OCIsImlzcyI6IkFFTUVUIiwiaWF0IjoxNzM4MTc2NDA3LCJ1c2VySWQiOiJiMjRkY2E5ZS1lZGJlLTQ4ZDAtOWM4NC0xOTMzNTE0ZGJmNzgiLCJyb2xlIjoiIn0.NfCWmX3XpiOWgD8gvwcM1RZUhmjxTTZDVSbGyt-Xy-c';  // Reemplaza con tu propia API key
+            const url = `https://opendata.aemet.es/opendata/api/mapasygraficos/analisis?api_key=${apiKey}`;
+
+            try {
+                // Realizamos la petición a la API para obtener la URL de la imagen
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                if (!data || !data.datos) {
+                    throw new Error('No se pudo obtener la imagen o los metadatos.');
+                }
+
+                // Obtener la URL de la imagen y los metadatos
+                const imageUrl = data.datos;
+                const metadataUrl = data.metadatos;
+
+                // Mostrar la imagen
+                const imgElement = document.createElement('img');
+                imgElement.src = imageUrl;
+                document.getElementById('imagen').appendChild(imgElement);
+
+                // Mostrar los metadatos
+                const metadataResponse = await fetch(metadataUrl);
+                const metadataData = await metadataResponse.json();
+                const metadataElement = document.createElement('div');
+                metadataElement.textContent = JSON.stringify(metadataData, null, 2);  // Mostramos los metadatos en formato JSON
+                document.getElementById('metadatos').appendChild(metadataElement);
+                
+            } catch (error) {
+                console.error('Error al obtener los datos de AEMET:', error);
+            }
+        }
+        // Asignar el evento de clic al botón
+        document.getElementById('boton').addEventListener('click', obtenerImagen);
+    </script>
+</body>
+</html>
