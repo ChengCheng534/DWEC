@@ -1,0 +1,61 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caras Aleatorias</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        #image-container {
+            border-radius: 50%;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 5px;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="image-container"></div>
+    <script>
+        const container = document.getElementById('image-container');
+        const imageArray = [];
+
+        fetch('https://randomuser.me/api/?results=100&inc=picture')
+            .then(response => response.json())
+            .then(data => {
+                data.results.forEach(user => {
+                    imageArray.push(user.picture.thumbnail);
+                });
+
+                for (let i = 0; i < 100; i++) {
+                    const img = document.createElement('img');
+                    img.src = imageArray[i];
+                    container.appendChild(img);
+                }
+
+                setInterval(() => {
+                    for (let i = 0; i < 100; i++) {
+                        container.children[i].src = imageArray[Math.floor(Math.random() * imageArray.length)];
+                    }
+                }, 200);
+            });
+    </script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Usuarios Aleatorios</title>
+    <style>
+        * {
+            font-family: sans-serif;
+        }
+
+        main {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .persona {
+            text-align: center;
+            width: 150px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+            background: #f9f9f9;
+        }
+
+        .persona img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+        }
+
+        .error {
+            background-color: red;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <main></main>
+    <script>
+        const main = document.querySelector("main");
+        const url = 'https://randomuser.me/api/?results=50';
+        let users = [];
+
+        function desordenarArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function mostrarImagen() {
+            main.innerHTML = "";
+            users.forEach(user => {
+                main.innerHTML += `
+                    <div class="persona">
+                        <figure>
+                            <img src="${user.picture}" alt="foto">
+                        </figure>
+                        <p>${user.name}</p>
+                    </div>
+                `;
+            });
+        }
+
+        fetch(url)
+            .then((resp) => resp.json())
+            .then(data => {
+                users = data.results.map(datos => ({
+                    picture: datos.picture.large,
+                    name: `${datos.name.first} ${datos.name.last}`
+                }));
+                mostrarImagen();
+                setInterval(() => {
+                    desordenarArray(users);
+                    mostrarImagen();
+                    return; 
+                }, 200);
+            })
+            .catch(error => {
+                main.innerHTML = `<p class="error">Error: ${error.message}</p>`;
+            });
+    </script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Animación de Caras Aleatorias</title>
+    <style>
+        * {
+            font-family: sans-serif;
+        }
+        main {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+        img {
+            width: 120px;
+            height: 120px;
+            border-radius: 5%;
+        }
+    </style>
+</head>
+<body>
+    <main></main>
+    <script>
+        const main = document.querySelector("main");
+        const url = 'https://randomuser.me/api/?results=1000';
+        let users = [];
+        let interval;
+
+        fetch(url)
+            .then(resp => resp.json())
+            .then(data => {
+                users = data.results.map(user => user.picture.large);
+                generarImagen();
+            })
+            .catch(error => {
+                main.innerHTML = `<p class="error">Error: ${error.message}</p>`;
+            });
+
+        function generarImagen() {
+            // Crear 50 imágenes iniciales
+            for (let i = 0; i < 50; i++) {
+                const img = document.createElement("img");
+                img.src = users[i];
+                main.appendChild(img);
+            }
+            
+            let count = 0;
+            interval = setInterval(() => {
+                if (count >= 100) {
+                    clearInterval(interval);
+                    return;
+                }
+                Imagenes();
+                count++;
+            }, 200);
+        }
+
+        function Imagenes() {
+            //Ordenar aleatorio
+            const images = document.querySelectorAll("img");
+            users.sort(() => Math.random() - 0.5);
+            images.forEach((img, index) => {
+                img.src = users[index];
+            });
+        }
+    </script>
+</body>
+</html>

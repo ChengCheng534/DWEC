@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mostrar 10 usuarios que cambian</title>
+    <style>
+        * {
+            font-family: sans-serif;
+        }
+        main {
+            text-align: center;
+        }
+        p {
+            margin: 0;
+        }
+        .error {
+            background-color: red;
+            color: white;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <main>
+    </main>
+    <script>
+        var main = document.querySelector("main");
+        const url = 'https://randomuser.me/api/';
+        
+        fetch(url)
+            .then((resp) => resp.json())
+            .then(data => {
+                let datos = data.results[0];
+                let foto = datos.picture.large;
+                let mail = datos.email;
+                let nombre = datos.name.first;
+                let apellido = datos.name.last;
+                let calle = datos.location.street.name + ' ' + datos.location.street.number;
+                let ciudad = datos.location.city;
+                let estado = datos.location.state;
+                
+                // Crear 50 imágenes iniciales
+            for (let i = 0; i < 50; i++) {
+                const img = document.createElement("img");
+                img.src = foto[i];
+                main.appendChild(img);
+            }
+
+                main.innerHTML = `
+                    <figure>
+                        <img src="${foto}" alt="foto">
+                    </figure>
+                    <p>${nombre} ${apellido}</p>
+                    <p>Email: ${mail}</p>
+                    <p>${calle}</p>
+                    <p>${ciudad} (${estado.toUpperCase()})</p>
+                    <button>Cambiar</button>
+                `;
+            })
+            .catch(error => {
+                main.innerHTML = `<p class="error">Error: ${error.message}</p>`;
+            });
+    </script>
+</body>
+</html>

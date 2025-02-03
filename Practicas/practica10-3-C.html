@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Usuarios aleatorios</title>
+    <style>
+        * {
+            font-family: sans-serif;
+        }
+        main {
+            text-align: center;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        .user-card {
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 8px;
+            width: 200px;
+            text-align: center;
+        }
+        .error {
+            background-color: red;
+            color: white;
+            font-weight: bold;
+        }
+        button {
+            margin-top: 10px;
+            padding: 5px 10px;
+            border: none;
+            background-color: blue;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <main></main>
+    <script>
+        const main = document.querySelector("main");
+        const url = 'https://randomuser.me/api/?results=10';
+
+        function fetchUsers() {
+            fetch(url)
+                .then(resp => resp.json())
+                .then(data => {
+                    main.innerHTML = '';
+                    data.results.forEach((datos, index) => {
+                        renderUser(datos, index);
+                    });
+                })
+                .catch(error => {
+                    main.innerHTML = `<p class="error">Error: ${error.message}</p>`;
+                });
+        }
+
+        function renderUser(datos, index) {
+            let foto = datos.picture.large;
+            let mail = datos.email;
+            let nombre = datos.name.first;
+            let apellido = datos.name.last;
+            let calle = datos.location.street.name + ' ' + datos.location.street.number;
+            let ciudad = datos.location.city;
+            let estado = datos.location.state;
+            
+            let userCard = document.createElement("div");
+            userCard.classList.add("user-card");
+            userCard.innerHTML = `
+                <figure>
+                    <img src="${foto}" alt="foto" id="img-${index}">
+                </figure>
+                <p id="name-${index}">${nombre} ${apellido}</p>
+                <p id="email-${index}">Email: ${mail}</p>
+                <p id="address-${index}">${calle}</p>
+                <p id="city-${index}">${ciudad} (${estado.toUpperCase()})</p>
+                <button onclick="changeUser(${index})">Cambiar usuario</button>
+            `;
+            main.appendChild(userCard);
+        }
+
+        function changeUser(index) {
+            fetch('https://randomuser.me/api/')
+                .then(resp => resp.json())
+                .then(data => {
+                    let newUser = data.results[0];
+                    document.getElementById(`img-${index}`).src = newUser.picture.large;
+                    document.getElementById(`name-${index}`).textContent = `${newUser.name.first} ${newUser.name.last}`;
+                    document.getElementById(`email-${index}`).textContent = `Email: ${newUser.email}`;
+                    document.getElementById(`address-${index}`).textContent = `${newUser.location.street.name} ${newUser.location.street.number}`;
+                    document.getElementById(`city-${index}`).textContent = `${newUser.location.city} (${newUser.location.state.toUpperCase()})`;
+                })
+                .catch(error => {
+                    alert("Error al cargar nuevo usuario: " + error.message);
+                });
+        }
+
+        fetchUsers();
+    </script>
+</body>
+</html>

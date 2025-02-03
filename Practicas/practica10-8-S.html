@@ -1,0 +1,105 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imágenes de Picsum</title>
+    <style>
+        body {
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+
+        .imagenes-container {
+            display: grid;
+            grid-template-columns: repeat(4, 300px); /* 4 imágenes por fila */
+            gap: 20px; /* Espacio entre imágenes */
+            justify-content: center;
+            padding: 20px;
+            flex-wrap: wrap;
+            overflow: hidden;
+        }
+
+        @media (max-width: 1200px) {
+            .imagenes-container {
+                grid-template-columns: repeat(3, 300px); /* 3 imágenes por fila */
+            }
+        }
+
+        @media (max-width: 900px) {
+            .imagenes-container {
+                grid-template-columns: repeat(2, 300px); /* 2 imágenes por fila */
+            }
+        }
+
+        @media (max-width: 600px) {
+            .imagenes-container {
+                grid-template-columns: repeat(1, 300px); /* 1 imagen por fila */
+            }
+        }
+
+        .imagen {
+            width: 300px;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Imágenes aleatorias de Picsum</h1>
+    
+    <div class="imagenes-container" id="imagenes-container">
+        <!-- Las imágenes se cargarán aquí dinámicamente -->
+    </div>
+
+    <script>
+        // Obtener referencia al contenedor
+        const container = document.getElementById('imagenes-container');
+
+        // Cantidad total de imágenes deseadas
+        const totalImages = 200;
+
+        // Generar 200 imágenes usando IDs consecutivos
+        const images = [];
+        for (let i = 1; i <= totalImages; i++) {
+            const img = document.createElement('img');
+            // URL dinámica basada en IDs consecutivos
+            img.src = `https://picsum.photos/id/${i}/300/300`;
+            img.alt = `Imagen ${i}`;
+            img.classList.add('imagen');
+            container.appendChild(img);
+            images.push(img); // Guardar la imagen en el array
+        }
+
+        // Función para cambiar las imágenes de forma aleatoria
+        function changeImages() {
+            images.forEach(img => {
+                const randomId = Math.floor(Math.random() * 1000) + 1; // Generar un ID aleatorio entre 1 y 1000
+                img.src = `https://picsum.photos/id/${randomId}/300/300`;
+            });
+        }
+
+        // Cambiar las imágenes 100 veces a intervalos de 200ms
+        let count = 0;
+        const intervalId = setInterval(() => {
+            changeImages();
+            count++;
+            if (count >= 100) {
+                clearInterval(intervalId); // Detener después de 100 cambios
+            }
+        }, 200); // 200ms de intervalo
+    </script>
+
+</body>
+</html>
