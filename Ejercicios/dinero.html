@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Cambio de Divisas</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="calculator">
+    <h1>Calculadora de Cambio de Divisas</h1>
+
+    <!-- Sección de entrada de datos -->
+    <div class="input-section">
+        <label for="cantidad">Cantidad:</label>
+        <input type="number" id="cantidad" placeholder="Ingresa la cantidad" required>
+
+        <label for="fromCurrency">De:</label>
+        <select id="fromCurrency">
+            <option value="USD">Dólar USD</option>
+            <option value="EUR">Euro EUR</option>
+            <option value="JPY">Yen JPY</option>
+            <option value="CAD">Dólar Canadiense CAD</option>
+            <option value="DKK">Corona Danesa DKK</option>
+            <option value="AUD">Dólar Australiano AUD</option>
+            <option value="GBP">Libra Esterlina GBP</option>
+            <option value="RUB">Rublo Ruso RUB</option>
+            <option value="CHF">Franco Suizo CHF</option>
+            <option value="CNY">Yuan Chino CNY</option>
+        </select>
+
+        <label for="toCurrency">A:</label>
+        <select id="toCurrency">
+            <option value="USD">Dólar USD</option>
+            <option value="EUR">Euro EUR</option>
+            <option value="JPY">Yen JPY</option>
+            <option value="CAD">Dólar Canadiense CAD</option>
+            <option value="DKK">Corona Danesa DKK</option>
+            <option value="AUD">Dólar Australiano AUD</option>
+            <option value="GBP">Libra Esterlina GBP</option>
+            <option value="RUB">Rublo Ruso RUB</option>
+            <option value="CHF">Franco Suizo CHF</option>
+            <option value="CNY">Yuan Chino CNY</option>
+        </select>
+    </div>
+
+    <!-- Botones de operación -->
+    <div class="buttons">
+        <button id="convertButton">Convertir</button>
+        <button id="clearButton">Borrar</button>
+    </div>
+
+    <!-- Resultado -->
+    <div class="result-section">
+        <h3>Resultado:</h3>
+        <p id="resultado">0</p>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const convertButton = document.getElementById("convertButton");
+        const clearButton = document.getElementById("clearButton");
+        const cantidadInput = document.getElementById("cantidad");
+        const fromCurrency = document.getElementById("fromCurrency");
+        const toCurrency = document.getElementById("toCurrency");
+        const resultado = document.getElementById("resultado");
+
+        // URL base de la API
+        const baseUrl = "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/";
+
+        // Función para obtener tasas de cambio
+        async function obtenerTasaCambio(from, to) {
+            try {
+                const response = await fetch(`${baseUrl}${from.toLowerCase()}.json`);
+                if (!response.ok) throw new Error("Error obteniendo datos");
+                const data = await response.json();
+                return data[from.toLowerCase()][to.toLowerCase()];
+            } catch (error) {
+                console.error("Error en la conversión:", error);
+                return null;
+            }
+        }
+
+        // Evento para el botón Convertir
+        convertButton.addEventListener("click", async function () {
+            const cantidad = parseFloat(cantidadInput.value);
+            const monedaOrigen = fromCurrency.value.toLowerCase();
+            const monedaDestino = toCurrency.value.toLowerCase();
+
+            if (isNaN(cantidad) || cantidad <= 0) {
+                resultado.textContent = "Ingrese una cantidad válida.";
+                return;
+            }
+
+            if (monedaOrigen === monedaDestino) {
+                resultado.textContent = "Seleccione diferentes monedas.";
+                return;
+            }
+
+            const tasaCambio = await obtenerTasaCambio(monedaOrigen, monedaDestino);
+
+            if (tasaCambio) {
+                const conversion = (cantidad * tasaCambio).toFixed(2);
+                resultado.textContent = `${cantidad} ${fromCurrency.value} = ${conversion} ${toCurrency.value}`;
+            } else {
+                resultado.textContent = "Error obteniendo la tasa de cambio.";
+            }
+        });
+
+        // Evento para el botón Borrar
+        clearButton.addEventListener("click", function () {
+            cantidadInput.value = "";
+            resultado.textContent = "0";
+        });
+    });
+
+
+</script>
+</body>
+
+</html>
