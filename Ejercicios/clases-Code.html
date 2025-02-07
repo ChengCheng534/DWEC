@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Cambio de Divisas</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="calculator">
+        <h1>Calculadora de Cambio de Divisas</h1>
+
+        <!-- Sección de entrada de datos -->
+        <div class="input-section">
+            <label for="cantidad">Cantidad:</label>
+            <input type="number" id="cantidad" placeholder="Ingresa la cantidad" required>
+
+            <label for="fromCurrency">De:</label>
+            <select id="fromCurrency">
+                <option value="USD">Dólar USD</option>
+                <option value="EUR">Euro EUR</option>
+                <option value="JPY">Yen JPY</option>
+                <option value="CAD">Dólar Canadiense CAD</option>
+                <option value="DKK">Corona Danesa DKK</option>
+                <option value="AUD">Dólar Australiano AUD</option>
+                <option value="GBP">Libra Esterlina GBP</option>
+                <option value="RUB">Rublo Ruso RUB</option>
+                <option value="CHF">Franco Suizo CHF</option>
+                <option value="CNY">Yuan Chino CNY</option>
+            </select>
+
+            <label for="toCurrency">A:</label>
+            <select id="toCurrency">
+                <option value="USD">Dólar USD</option>
+                <option value="EUR">Euro EUR</option>
+                <option value="JPY">Yen JPY</option>
+                <option value="CAD">Dólar Canadiense CAD</option>
+                <option value="DKK">Corona Danesa DKK</option>
+                <option value="AUD">Dólar Australiano AUD</option>
+                <option value="GBP">Libra Esterlina GBP</option>
+                <option value="RUB">Rublo Ruso RUB</option>
+                <option value="CHF">Franco Suizo CHF</option>
+                <option value="CNY">Yuan Chino CNY</option>
+            </select>
+        </div>
+
+        <!-- Botones de operación -->
+        <div class="buttons">
+            <button id="convertButton">Convertir</button>
+            <button id="clearButton">Borrar</button>
+        </div>
+
+        <!-- Resultado -->
+        <div class="result-section">
+            <h3>Resultado:</h3>
+            <p id="resultado">0</p>
+        </div>
+    </div>
+
+    <script>
+            const baseUrl = 'https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/usd.json'
+const tabla = {};
+
+document.addEventListener('DOMContentLoaded', async function() {
+    const response = await fetch(baseUrl);
+    console.log(response.status);
+    console.log(response.ok);
+    const h = await response.json();
+    //console.log(JSON.stringify(h,null,4));
+    //recorremos el array h.usd
+    for (let divisa in h.usd) {   
+            // Asignamos la tasa de cambio en el objeto `tabla` con la clave (divisa) en mayúsculas
+            tabla[divisa.toUpperCase()] = h.usd[divisa];
+        
+    }
+    //console.log("**************************");
+    //console.table(tabla);
+    //console.log("+++++++++++++++++++++++++++");
+    
+
+    const cantidad = document.getElementById('cantidad');
+    const textOutput = document.getElementById('resultado');
+    const fromCurrency = document.getElementById('fromCurrency');
+    const toCurrency = document.getElementById('toCurrency');
+
+    document.getElementById('convertButton').addEventListener('click', function() {
+        const de_Divisa = fromCurrency.value;
+        const a_Divisa = toCurrency.value;
+        const cambioDivisa = cantidad.value; 
+        const val =  cambioDivisa * tabla[a_Divisa] / tabla[de_Divisa]; //********************
+        
+        //información de control por consola
+        console.log("cambio de divisas");
+        console.log("a_Divisa = "+a_Divisa,",tabla[a_Divisa] = "+tabla[a_Divisa]);
+        console.log("de_Divisa = "+de_Divisa,",tabla[de_Divisa] = "+tabla[de_Divisa]);
+        
+        textOutput.textContent = val;
+       
+    });
+
+    document.getElementById('clearButton').addEventListener('click', function() {
+        textOutput.textContent = '0';
+    });
+});
+
+
+    </script>
+</body>
+</html>

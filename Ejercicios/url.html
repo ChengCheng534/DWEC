@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Buscar URLs</title>
+</head>
+<body>
+    <div id="datos_respuesta_fetch"></div>
+
+    <script>
+        function sacarURLs(json) {
+            let https = [];
+            
+            // Convertir el objeto JSON en una cadena y dividirla por líneas
+            let lineas = JSON.stringify(json, null, 2).split("\n");
+            
+            // Recorrer las líneas y buscar las que contienen "http"
+            lineas.forEach(linea => {
+                if (linea.includes("http")) {
+                    https.push(linea.trim().replace(/["',]/g, "")); // Limpiar caracteres extra
+                }
+            });
+
+            return https;
+        }
+
+        function mostrarURLs(urls) {
+            const resultado = document.getElementById("datos_respuesta_fetch");
+
+            if (urls.length > 0) {
+                resultado.innerHTML = `<h3>URLs encontradas:</h3>
+                                            <ul>${urls.map(url => `
+                                                <li><a href="${url}">${url}</a></li>`).join("")}
+                                            </ul>`;
+            } else {
+                resultado.innerHTML = "<p>No se encontraron URLs.</p>";
+            }
+        }
+
+        fetch("https://api.github.com/repos/javascript-tutorial/en.javascript.info/commits/e4668262f5917bd0ccc8b286da2cbab97064f9d1")
+            .then(response => response.json())
+            .then(data => {
+                let urls = sacarURLs(data);
+                mostrarURLs(urls); 
+            })
+            .catch(error => {
+                console.error("Error al obtener los datos:", error);
+                document.getElementById("datos_respuesta_fetch").innerHTML = "<p>Error al cargar los datos.</p>";
+            });
+    </script>
+</body>
+</html>
