@@ -1,0 +1,62 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.hero-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.carrusel {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+.coches {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    width: 500%;
+}
+
+.coche {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: #000;
+    color: white;
+}
+
+.coche img {
+    max-width: 80%;
+    height: auto;
+    margin-top: 20px;
+}
+
+/* Botones */
+button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 15px;
+    cursor: pointer;
+    font-size: 24px;
+}
+
+#prev { left: 10px; }
+#next { right: 10px; }
+
+button:hover {
+    background: rgba(0, 0, 0, 0.8);
+}
