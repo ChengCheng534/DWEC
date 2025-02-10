@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <canvas id="lienzo"></canvas>
+
+    <script>
+        let lienzo = document.getElementById("lienzo");
+        let contexto = lienzo.getContext("2d");
+        contexto.fillStyle = "red";
+        contexto.lineWidth = 2;
+        contexto.strokeStyle = "gray";
+        contexto.fillRect(10, 10, 150, 100);
+        contexto.strokeRect(30, 30, 150, 100);
+
+
+        
+    </script>
+</body>
+
+</html>

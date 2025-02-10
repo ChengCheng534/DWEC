@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas Ball</title>
+</head>
+<body>
+    <canvas id="lienzo" width="500" height="400" style="border:1px solid #000;"></canvas>
+    <script>
+        var canvas = document.getElementById("lienzo");
+        var ctx = canvas.getContext("2d");
+        var bolaRadios = 10;
+        var x = canvas.width / 2;
+        var y = canvas.height - 30;
+        var dx = 2;
+        var dy = -2;
+
+        function bola1() {
+            ctx.beginPath();
+            ctx.arc(x, y, bolaRadios, 0, Math.PI * 2);
+            ctx.fillStyle = "red";
+            ctx.fill();
+            ctx.closePath();
+        }
+
+        function bola2() {
+            ctx.beginPath();
+            ctx.arc(270, y, bolaRadios, 0, Math.PI * 2);
+            ctx.fillStyle = "blue";
+            ctx.fill();
+            ctx.closePath();
+        }
+
+        function movimiento() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            bola1();
+            bola2();
+
+            if (x + dx > canvas.width - bolaRadios || x + dx < bolaRadios) {
+                dx = -dx;
+            }
+            if (y + dy > canvas.height - bolaRadios || y + dy < bolaRadios) {
+                dy = -dy;
+            }
+
+            x += dx;
+            y += dy;
+        }
+
+        setInterval(movimiento, 10);
+    </script>
+</body>
+
+</html>
