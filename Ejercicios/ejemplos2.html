@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Geolocalización</title>
+</head>
+<body>
+<main> </main>
+<script>
+    var main=document.querySelector("main");
+    navigator.geolocation.getCurrentPosition(pos=>{
+            main.textContent=`Latitud: ${pos.coords.latitude},                           `+
+            `Longitud: ${pos.coords.longitude}`;
+            console.log("Latitud:", pos.coords.latitude);
+            console.log("Longitud:", pos.coords.longitude);
+            console.log("Precisión:", pos.coords.accuracy, "metros");   
+            console.log("Altitud:", pos.coords.altitude, "metros,   no disponible en este navegador");    
+            console.log("timestamp:", pos.timestamp, "milisegundos");    
+            const milisegundos = pos.timestamp; // Ejemplo de milisegundos (1 de enero de 1970)
+            const fecha = new Date(milisegundos);
+            console.log(fecha); // Devuelve la fecha en formato completo
+    })
+    
+</script>
+</body>
+</html> 

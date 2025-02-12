@@ -12,6 +12,7 @@
         var ctx = canvas.getContext("2d");
         var bolaRadios = 10;
         var x = canvas.width / 2;
+        var xx = canvas.width / 3;
         var y = canvas.height - 30;
         var dx = 2;
         var dy = -2;
@@ -26,7 +27,7 @@
 
         function bola2() {
             ctx.beginPath();
-            ctx.arc(270, y, bolaRadios, 0, Math.PI * 2);
+            ctx.arc(xx, y, bolaRadios, 0, Math.PI * 2);
             ctx.fillStyle = "blue";
             ctx.fill();
             ctx.closePath();
@@ -40,6 +41,7 @@
             if (x + dx > canvas.width - bolaRadios || x + dx < bolaRadios) {
                 dx = -dx;
             }
+            
             if (y + dy > canvas.height - bolaRadios || y + dy < bolaRadios) {
                 dy = -dy;
             }

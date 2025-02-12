@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Canvas Ball Collision</title>
+    <title>Canvas Ball Collision with Rotation</title>
 </head>
 <body>
     <canvas id="lienzo" width="500" height="400" style="border:1px solid #000;"></canvas>
@@ -12,53 +12,75 @@
         var ctx = canvas.getContext("2d");
         var bolaRadios = 10;
 
-        // Posiciones iniciales
-        var x1 = 100, y1 = 200, dx1 = 2, dy1 = 2;
-        var x2 = 400, y2 = 200, dx2 = -2, dy2 = -2;
+        var bola1 = { x: 100, y: 200, dx: 2, dy: 2, angle: 0, angularSpeed: 0.1 };
+        var bola2 = { x: 400, y: 200, dx: -2, dy: -2, angle: 0, angularSpeed: 0.1 };
 
-        function dibujarBola(x, y, color) {
+        function dibujarBola(bola, color) {
+            ctx.save();
+            ctx.translate(bola.x, bola.y);
+            ctx.rotate(bola.angle);
+            
             ctx.beginPath();
-            ctx.arc(x, y, bolaRadios, 0, Math.PI * 2);
+            ctx.arc(0, 0, bolaRadios, 0, Math.PI * 2);
             ctx.fillStyle = color;
             ctx.fill();
             ctx.closePath();
+
+            // Dibujar línea para mostrar la rotación
+            ctx.beginPath();
+            ctx.moveTo(0, 0);
+            ctx.lineTo(bolaRadios, 0);
+            ctx.strokeStyle = "white";
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            ctx.closePath();
+
+            ctx.restore();
         }
 
         function detectarColision() {
-            var dx = x2 - x1;
-            var dy = y2 - y1;
+            var dx = bola2.x - bola1.x;
+            var dy = bola2.y - bola1.y;
             var distancia = Math.sqrt(dx * dx + dy * dy);
 
             if (distancia <= bolaRadios * 2) {
-                // Intercambiar velocidades simulando choque
-                var tempDx = dx1;
-                var tempDy = dy1;
-                dx1 = dx2;
-                dy1 = dy2;
-                dx2 = tempDx;
-                dy2 = tempDy;
+                var tempDx = bola1.dx;
+                var tempDy = bola1.dy;
+                bola1.dx = bola2.dx;
+                bola1.dy = bola2.dy;
+                bola2.dx = tempDx;
+                bola2.dy = tempDy;
+
+                // Intercambiar velocidades angulares para simular rotación
+                var tempAngular = bola1.angularSpeed;
+                bola1.angularSpeed = bola2.angularSpeed;
+                bola2.angularSpeed = tempAngular;
             }
         }
 
         function movimiento() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            dibujarBola(x1, y1, "red");
-            dibujarBola(x2, y2, "blue");
+            dibujarBola(bola1, "red");
+            dibujarBola(bola2, "blue");
 
             detectarColision();
 
             // Rebotar en los bordes
-            if (x1 + dx1 > canvas.width - bolaRadios || x1 + dx1 < bolaRadios) dx1 = -dx1;
-            if (y1 + dy1 > canvas.height - bolaRadios || y1 + dy1 < bolaRadios) dy1 = -dy1;
+            if (bola1.x + bola1.dx > canvas.width - bolaRadios || bola1.x + bola1.dx < bolaRadios) bola1.dx = -bola1.dx;
+            if (bola1.y + bola1.dy > canvas.height - bolaRadios || bola1.y + bola1.dy < bolaRadios) bola1.dy = -bola1.dy;
 
-            if (x2 + dx2 > canvas.width - bolaRadios || x2 + dx2 < bolaRadios) dx2 = -dx2;
-            if (y2 + dy2 > canvas.height - bolaRadios || y2 + dy2 < bolaRadios) dy2 = -dy2;
+            if (bola2.x + bola2.dx > canvas.width - bolaRadios || bola2.x + bola2.dx < bolaRadios) bola2.dx = -bola2.dx;
+            if (bola2.y + bola2.dy > canvas.height - bolaRadios || bola2.y + bola2.dy < bolaRadios) bola2.dy = -bola2.dy;
 
-            x1 += dx1;
-            y1 += dy1;
-            x2 += dx2;
-            y2 += dy2;
+            bola1.x += bola1.dx;
+            bola1.y += bola1.dy;
+            bola2.x += bola2.dx;
+            bola2.y += bola2.dy;
+            
+            // Aplicar rotación
+            bola1.angle += bola1.angularSpeed;
+            bola2.angle += bola2.angularSpeed;
         }
 
         setInterval(movimiento, 10);

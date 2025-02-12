@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Geolocalización</title>
+</head>
+<body>
+<main> </main>
+<script>
+    //sintaxis   getCurrentPosition(successCallback, errorCallback, options)
+    //sintaxis   watchPosition(successCallback, errorCallback, options)
+    
+    if ("geolocation" in navigator) {
+            const options = {
+                enableHighAccuracy: true,  //coordenadas obtenidas con la mayor precisión utilizando GPS
+                timeout: 10000, // 10 segundos  tiempo máximo de espera antes de generar un error
+                maximumAge: 0,  //posicion de las coordenadas en tiempo real
+            };
+
+    const watchId = navigator.geolocation.watchPosition(
+        (position) => {
+        console.log("Latitud:", position.coords.latitude);
+        console.log("Longitud:", position.coords.longitude);
+        console.log("Velocidad:", position.coords.speed);
+        },
+        (error) => {
+        console.error("Error:", error.message);
+        },
+        options  //++++++++++++++++
+    );
+
+    // Detener el seguimiento después de 30 segundos
+    setTimeout(() => {
+         navigator.geolocation.clearWatch(watchId);
+         console.log("Monitoreo detenido.");
+         }, 30000);
+    } else {
+        console.error("Geolocalización no disponible.");
+}
+</script>
+</body>
+</html> 
