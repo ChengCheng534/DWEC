@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notificación en JavaScript</title>
+</head>
+<body>
+  <button id="notificar">Enviar Notificación</button>
+
+  <script>
+    // Solicitar permiso para mostrar notificaciones
+    document.getElementById("notificar").addEventListener("click", () => {
+      if (Notification.permission === "default") {
+        Notification.requestPermission()
+          .then((h) => {
+            console.log("Valor de permiso: " + h);
+            if (h === "granted") {
+              mostrarNotificacion(); // Mostrar la notificación si se concede el permiso
+            } else {
+              console.log("Permiso denegado para notificaciones");
+            }
+          });
+      } else if (Notification.permission === "granted") {
+        mostrarNotificacion(); // Mostrar directamente si ya se concedió el permiso
+      } else {
+        console.log("El permiso ya fue denegado");
+      }
+    });
+
+    function mostrarNotificacion() {
+      let n = new Notification("¡Hola! Tienes una nueva notificación.", {
+        body: "Este es un ejemplo de notificación en JavaScript.",
+        requireInteraction: true // La notificación permanecerá hasta que el usuario la cierre
+      });
+      console.log("función    mostrarNotification()");
+      alert(n.body);
+    }
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+

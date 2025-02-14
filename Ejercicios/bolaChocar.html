@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bola que rebota</title>
+    <style>
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            border: 2px solid black;
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* Estilo para el contador */
+        #contador {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
+            font-family: Arial, sans-serif;
+            color: black;
+            background-color: white;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        #colisiones {
+            position: absolute;
+            top: 60px;
+            right: 10px;
+            font-size: 20px;
+            font-family: Arial, sans-serif;
+            color: black;
+            background-color: white;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Contenedor para el contador -->
+    <div id="contador">Choques evitados: 0</div>
+    <div id="colisiones">Colisión con el lienzo</div>
+    <canvas id="miCanvas" width="800" height="700"></canvas>
+
+    <script>
+        const canvas = document.getElementById("miCanvas");
+        const ctx = canvas.getContext("2d");
+
+        let bola = { x: 100, y: 100, radio: 20, dx: 6, dy: 6 };
+        let bolasCreadas = [];
+        let enMovimiento = false;
+
+        canvas.addEventListener("click", (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            bolasCreadas.push({ x, y, radio: 10 });
+        });
+
+        document.addEventListener("keydown", () => {
+            enMovimiento = true;
+        });
+
+        function dibujarBola(b) {
+            ctx.beginPath();
+            ctx.arc(b.x, b.y, b.radio, 0, Math.PI * 2);
+            ctx.fillStyle = "blue";
+            ctx.fill();
+            ctx.closePath();
+        }
+
+        function dibujarBolasCreadas() {
+            for (let b of bolasCreadas) {
+                ctx.beginPath();
+                ctx.arc(b.x, b.y, b.radio, 0, Math.PI * 2);
+                ctx.fillStyle = "red";
+                ctx.fill();
+                ctx.closePath();
+            }
+        }
+
+        function actualizar() {
+            if (enMovimiento) {
+                bola.x += bola.dx;
+                bola.y += bola.dy;
+
+                // Rebote en las paredes
+                if (bola.x - bola.radio < 0 || bola.x + bola.radio > canvas.width) {
+                    bola.dx *= -1;
+                }
+                if (bola.y - bola.radio < 0 || bola.y + bola.radio > canvas.height) {
+                    bola.dy *= -1;
+                }
+
+                // Detección de colisión con las bolas creadas
+                for (let b of bolasCreadas) {
+                    let dx = bola.x - b.x;
+                    let dy = bola.y - b.y;
+                    let distancia = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distancia < bola.radio + b.radio) {
+                        // Rebote simple
+                        let angulo = Math.atan2(dy, dx);
+                        bola.dx = 6 * Math.cos(angulo);
+                        bola.dy = 6 * Math.sin(angulo);
+                    }
+                }
+            }
+        }
+
+        function dibujar() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            dibujarBola(bola);
+            dibujarBolasCreadas();
+            actualizar();
+            requestAnimationFrame(dibujar);
+        }
+
+        dibujar();
+    </script>
+</body>
+</html>
