@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Usuarios con Web Storage</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #4CAF50;
+            text-align: center;
+        }
+
+        #form-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            margin: 0 auto;
+        }
+
+        label {
+            font-size: 1.2em;
+            color: #333;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+
+        button {
+            width: auto;
+            padding: 8px 16px;
+            font-size: 1em;
+            background-color: #8BC34A;
+            color: white;
+            border: 3px solid #4CAF50;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #7CB342;
+        }
+
+        #show-data, #clear-data, #back-to-form {
+            width: auto;
+            margin-bottom: 10px;
+        }
+
+        #clear-data {
+            background-color: #FF7043;
+        }
+
+        #clear-data:hover {
+            background-color: #FF5722;
+        }
+
+        #back-to-form {
+            background-color: #4CAF50;
+        }
+
+        #back-to-form:hover {
+            background-color: #388E3C;
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 300px;
+            margin: 0 auto;
+        }
+
+        .focus {
+            background-color: yellow !important;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <h1>Formulario de Registro de Usuario</h1>
+
+    <div id="form-container">
+        <form id="user-form">
+            <label for="name">Nombre:</label>
+            <input type="text" id="name" required>
+            <br>
+            <label for="phone">Teléfono (+34 seguido de 9 dígitos):</label>
+            <input type="tel" id="phone" pattern="^\+34\d{9}$" placeholder="+34XXXXXXXXX" required>
+            <br>
+            <button type="submit" id="save-data-button" tabindex="0">Guardar Datos</button>
+        </form>
+    </div>
+
+    <br>
+
+    <div class="button-container">
+        <button id="show-data" tabindex="1">Mostrar Datos</button>
+        <button id="clear-data" tabindex="2">Borrar Todos los Datos</button>
+        <button id="back-to-form" tabindex="3" style="display: none;">Registrar usuarios en Formulario</button>
+    </div>
+
+    <div id="user-info" style="display: none;">
+        <h2>Usuarios Guardados:</h2>
+        <ul id="user-list"></ul>
+    </div>
+
+    <script>
+        const form = document.getElementById('user-form');
+        const nameInput = document.getElementById('name');
+        const phoneInput = document.getElementById('phone');
+        const saveButton = document.getElementById('save-data-button');
+        const showDataButton = document.getElementById('show-data');
+        const clearDataButton = document.getElementById('clear-data');
+        const backToFormButton = document.getElementById('back-to-form');
+        const userInfoDiv = document.getElementById('user-info');
+        const userList = document.getElementById('user-list');
+
+        // Función para guardar datos en el almacenamiento local
+        function saveData(name, phone) {
+            let users = JSON.parse(localStorage.getItem('users')) || [];
+            users.push({ name, phone });
+            localStorage.setItem('users', JSON.stringify(users));
+        }
+
+        // Función para mostrar los datos guardados
+        function showData() {
+            let users = JSON.parse(localStorage.getItem('users')) || [];
+            if (users.length > 0) {
+                userList.innerHTML = users.map(user => `<li>${user.name} - ${user.phone}</li>`).join('');
+                userInfoDiv.style.display = 'block';
+                backToFormButton.style.display = 'block';
+            } else {
+                userList.innerHTML = '<li>No hay usuarios registrados.</li>';
+            }
+        }
+
+        // Función para borrar todos los datos
+        function clearData() {
+            localStorage.removeItem('users');
+            userInfoDiv.style.display = 'none';
+            backToFormButton.style.display = 'none';
+            alert('Datos borrados con éxito.');
+        }
+
+        // Evento para guardar los datos
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = nameInput.value;
+            const phone = phoneInput.value;
+
+            saveData(name, phone);
+            nameInput.value = '';
+            phoneInput.value = '';
+            alert('Usuario guardado correctamente.');
+        });
+
+        // Mostrar los datos guardados
+        showDataButton.addEventListener('click', () => {
+            showData();
+        });
+
+        // Borrar los datos guardados
+        clearDataButton.addEventListener('click', () => {
+            clearData();
+        });
+
+        // Volver al formulario
+        backToFormButton.addEventListener('click', () => {
+            userInfoDiv.style.display = 'none';
+            backToFormButton.style.display = 'none';
+            form.reset();
+        });
+
+    </script>
+</body>
+</html>
