@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title> fetch </title>
+</head>
+<body>
+<script>
+   function caidaLibre(alturaInicial) {
+  const gravedad = 9.81; // aceleración debido a la gravedad en m/s²
+  let tiempo = 0; // El tiempo en segundos
+  let velocidad = 0; // La velocidad en m/s
+  let altura = alturaInicial; // Altura inicial del objeto
+
+  console.log(`Comenzando la caída libre desde una altura de ${altura} metros...`);
+
+  // Creamos una promesa que simula la caída libre con intervalos de tiempo
+  const caida = new Promise((resolve, reject) => {    //***********************************
+    const intervaloCaida = setInterval(() => {
+      // Calcular la nueva velocidad (v = u + at), donde u es la velocidad inicial (0), a es la aceleración, y t es el tiempo.
+      velocidad = gravedad * tiempo; 
+
+      // Calcular la nueva altura (h = h0 - 1/2 * g * t²)
+      altura = alturaInicial - 0.5 * gravedad * Math.pow(tiempo, 2);
+
+      // Si el objeto llega al suelo, detener la simulación
+      if (altura <= 0) {
+        altura=0;
+        clearInterval(intervaloCaida);
+        resolve(`El objeto ha tocado el suelo tras ${tiempo.toFixed(2)} segundos de caída a una velocidad de ${velocidad.toFixed(2)} m/s.`);  //+++++++++++++++++
+      }
+
+      console.log(`Tiempo: ${tiempo.toFixed(2)} s, Altura: ${altura.toFixed(2)} m, Velocidad: ${velocidad.toFixed(2)} m/s`);
+
+      // Aumentamos el tiempo en 0.5 segundos en cada intervalo
+      tiempo += 0.5;
+
+    }, 500); // El intervalo de 500 ms para simular el paso del tiempo en la caída
+  });
+
+  caida.then((mensaje) => {
+    console.log(mensaje);
+  }).catch((error) => {
+    console.error("Error en la simulación:", error);
+  });
+}
+
+// Llamamos a la función para simular la caída desde una altura de 100 metros
+caidaLibre(100);
+
+
+
+</script>
+</body>
+</html>

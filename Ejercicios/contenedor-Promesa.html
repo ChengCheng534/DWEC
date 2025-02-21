@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>c==3promise.all</title>
+</head>
+<body>
+  <!-- Contenedores donde se mostrarán los resultados -->
+  <div id="usuarios"></div>
+  <div id="productos"></div>
+  <div id="clima"></div>
+
+<script>
+    // URLs de las APIs que vamos a consultar
+    const urlUsuarios = 'https://jsonplaceholder.typicode.com/users';
+    const urlProductos = 'https://fakestoreapi.com/products';
+    const urlClima = 'https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current_weather=true'; // Ejemplo de API del clima
+    //const urlUsuarios1 = 'https://jsonplaceholder.typicode.com/users1';
+
+    // Función que realiza las solicitudes a las tres APIs utilizando promesas
+    const fetchData = () => {
+        // Realizamos las solicitudes a las tres APIs de forma concurrente
+        Promise.all([
+            fetch(urlUsuarios),
+            fetch(urlProductos),
+            fetch(urlClima)
+        ])
+        .then(responses => {
+            // Verificamos si todas las respuestas fueron exitosas
+            const isAllOk = responses.every(response => response.ok);
+
+            if (isAllOk) {
+                // Si todas las respuestas son exitosas, parseamos las respuestas como JSON
+                return Promise.all(responses.map(response => response.json()));
+            } else {
+                // Si alguna solicitud falla, lanzamos un error
+                throw new Error('Algunas de las peticiones fallaron.');
+            }
+        })
+        .then(data => {
+            // Mostrar los datos de cada respuesta en sus respectivos contenedores
+            document.getElementById('usuarios').innerHTML = `<h3>Usuarios</h3><pre>${JSON.stringify(data[0], null, 2)}</pre>`;
+            document.getElementById('productos').innerHTML = `<h3>Productos</h3><pre>${JSON.stringify(data[1], null, 2)}</pre>`;
+            document.getElementById('clima').innerHTML = `<h3>Clima</h3><pre>${JSON.stringify(data[2], null, 2)}</pre>`;
+        })
+        .catch(error => {
+            // Si alguna solicitud falla, mostramos el error
+            document.body.innerHTML = `<h3>Error: ${error.message}</h3>`;
+        });
+    };
+
+    // Llamar a la función que hace las solicitudes
+    fetchData();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>caida libre de un objeto> </title>
+</head>
+<body>
+<script>
+    /* 
+    Desarrolla una simulación de una caída libre de un objeto desde 
+    una altura determinada con velocidad incial cero. 
+    La simulación debe calcular y mostrar 
+    el tiempo que tarda el objeto en llegar al suelo, su velocidad
+    en el momento de impacto y la altura en cada intervalo de tiempo
+    cada 500 milisegundos.
+    Para ello, implementa una función en JavaScript llamada caidaLibre
+    bajo el concepto de promesa
+    que reciba como parámetro la altura inicial del objeto,
+    y utilice la fórmula física para calcular la aceleración
+    debido a la gravedad.
+    La promesa sera considerada rechazada si la altura es cero o 
+    negativa, y en caso contrario se resolvera realizando los cálculos
+    */
+    const gravedad = 9.81; // aceleración debido a la gravedad en m/s²
+
+    function caidaLibre(alturaInicial) {
+        return new Promise((resolve, reject) => {
+            if (alturaInicial <= 0) {
+                reject("La altura inicial debe ser mayor que cero.");
+                return;
+            }
+
+            let tiempo = 0;
+            let altura = alturaInicial;
+            let velocidad = 0;
+            let intervaloTiempo = 0.5; 
+
+            let intervaloCaida = setInterval(() => {
+                altura = alturaInicial - (0.5 * gravedad * Math.pow(tiempo, 2));
+                velocidad = gravedad * tiempo;
+
+                if (altura <= 0) {
+                clearInterval(intervaloCaida); // Detener el intervalo
+                resolve({
+                    tiempoTotal: tiempo.toFixed(2),
+                    velocidadImpacto: velocidad.toFixed(2),
+                    alturaFinal: 0
+                });
+                } else {
+                console.log(`Tiempo: ${tiempo.toFixed(2)} s, Altura: ${altura.toFixed(2)} m, Velocidad: ${velocidad.toFixed(2)} m/s`);
+                }
+
+                tiempo += intervaloTiempo;
+            }, 1000);
+        });
+    }
+    caidaLibre(100)
+        .then(resultado => {
+        console.log(`Tiempo total de caída: ${resultado.tiempoTotal} segundos`);
+        console.log(`Velocidad al impacto: ${resultado.velocidadImpacto} m/s`);
+        console.log(`Altura final: ${resultado.alturaFinal} metros`);
+        })
+        
+        .catch(error => {
+        console.error(error);
+        });
+
+</script>
+</body>
+</html>

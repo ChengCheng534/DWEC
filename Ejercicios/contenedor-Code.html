@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>promise.all</title>
+</head>
+<body>
+  <!-- Contenedores donde se mostrarán los resultados -->
+  <div id="usuarios"></div>
+  <div id="productos"></div>
+  <div id="clima"></div>
+
+<script>
+    // Función para obtener datos de una API
+    function obtenerDatosDeAPI(url) {
+        return new Promise((resolve, reject) => {
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Error al obtener datos de ${url}`);
+                    }
+                    return response.json();
+                })
+                .then(data => resolve(data))
+                .catch(error => reject(error));
+        });
+    }
+
+    // URLs de las APIs que vamos a consultar
+    const urlUsuarios = 'https://jsonplaceholder.typicode.com/users';
+    const urlProductos = 'https://fakestoreapi.com/products';
+    const urlClima = 'https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current_weather=true'; // Ejemplo de API del clima
+    //const urlUsuarios1 = 'https://jsonplaceholder.typicode.com/users1';
+    
+    // Utilizando Promise.all() para realizar las solicitudes en paralelo
+    Promise.all([
+        obtenerDatosDeAPI(urlUsuarios),
+        obtenerDatosDeAPI(urlProductos),
+        obtenerDatosDeAPI(urlClima)
+    ])
+    .then(resultados => {
+        // Los resultados son un array con los datos de cada API en el mismo orden en que se pasaron las URLs
+        const usuarios = resultados[0];
+        const productos = resultados[1];
+        const clima = resultados[2];
+
+        // Mostrar los usuarios en la consola y en el navegador
+        let htmlUsuarios = '<h2>Usuarios</h2><ul>';
+        usuarios.forEach(usuario => {
+            console.log(usuario);  // Mostrar en consola
+            htmlUsuarios += `<li>${usuario.name} - ${usuario.email}</li>`;  // Mostrar en navegador
+        });
+        htmlUsuarios += '</ul>';
+        document.getElementById('usuarios').innerHTML = htmlUsuarios;
+
+        // Mostrar los productos en la consola y en el navegador
+        let htmlProductos = '<h2>Productos</h2><ul>';
+        productos.forEach(producto => {
+            console.log(producto);  // Mostrar en consola
+            htmlProductos += `<li>${producto.title} - $${producto.price}</li>`;  // Mostrar en navegador
+        });
+        htmlProductos += '</ul>';
+        document.getElementById('productos').innerHTML = htmlProductos;
+
+        // Mostrar el clima en la consola y en el navegador
+        let htmlClima = '<h2>Clima</h2>';
+        Object.values(clima.current_weather).forEach(valor => {
+            console.log(valor);  // Mostrar en consola
+            htmlClima += `<p>${valor}</p>`;  // Mostrar en navegador
+        });
+        document.getElementById('clima').innerHTML = htmlClima;
+
+    })
+    .catch(error => {
+        console.error('Error al obtener datos de las APIs:', error);
+    });
+</script>
+
+</body>
+</html>

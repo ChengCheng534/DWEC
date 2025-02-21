@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Caída Libre de un Objeto</title>
+</head>
+<body>
+
+<script>
+  const gravedad = 9.81; // Aceleración debido a la gravedad en m/s²
+
+  // Función que simula la caída libre
+  function caidaLibre(alturaInicial) {
+    return new Promise((resolve, reject) => {
+      if (alturaInicial <= 0) {
+        reject("La altura inicial debe ser mayor que cero.");
+        return;
+      }
+
+      // Variables
+      let tiempo = 0; // Tiempo en segundos
+      let altura = alturaInicial;
+      let velocidad = 0;
+      let intervalo = 0.5; // Intervalo de tiempo en segundos (500 ms)
+
+      // Usamos setInterval para actualizar cada 500ms
+      let intervaloCaida = setInterval(() => {
+        // Calculamos la altura y velocidad
+        altura = alturaInicial - (0.5 * gravedad * Math.pow(tiempo, 2));
+        velocidad = gravedad * tiempo;
+
+        // Si la altura es menor o igual a cero, el objeto ha llegado al suelo
+        if (altura <= 0) {
+          clearInterval(intervaloCaida); // Detenemos el intervalo
+          resolve({
+            tiempoTotal: tiempo.toFixed(2),
+            velocidadImpacto: velocidad.toFixed(2),
+            alturaFinal: 0
+          });
+        } else {
+          console.log(`Tiempo: ${tiempo.toFixed(2)} s, Altura: ${altura.toFixed(2)} m, Velocidad: ${velocidad.toFixed(2)} m/s`);
+        }
+
+        tiempo += intervalo;
+      }, intervalo * 1000);
+    });
+  }
+
+  // Llamada de ejemplo con altura inicial de 100 metros
+  caidaLibre(1000)
+    .then(result => {
+      console.log(`Tiempo total de caída: ${result.tiempoTotal} segundos`);
+      console.log(`Velocidad al impacto: ${result.velocidadImpacto} m/s`);
+      console.log(`Altura final: ${result.alturaFinal} metros`);
+    })
+    .catch(error => {
+      console.error(error);
+    });
+</script>
+
+</body>
+</html>

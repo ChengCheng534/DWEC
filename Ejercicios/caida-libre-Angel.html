@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Simulación de Caída Libre</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        input, button {
+            padding: 10px;
+            margin: 5px 0;
+        }
+        #resultado {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Simulación de Caída Libre</h1>
+    <label for="altura">Altura inicial (metros):</label>
+    <input type="number" id="altura" placeholder="Ingrese la altura" step="0.1" min="0.1">
+    <button id="iniciar">Iniciar Simulación</button>
+
+    <div id="resultado"></div>
+
+    <script>
+        const gravedad = 9.81; // aceleración debido a la gravedad en m/s²
+
+        function caidaLibre(alturaInicial) {
+            return new Promise((resolve, reject) => {
+                // Validar que la altura sea positiva
+                if (alturaInicial <= 0) {
+                    reject("La altura debe ser un valor positivo.");
+                    return;
+                }
+
+                // Calcular el tiempo que tarda en llegar al suelo
+                const tiempoTotal = Math.sqrt((2 * alturaInicial) / gravedad);
+
+                // Mostrar la altura cada 500 milisegundos
+                let tiempoTranscurrido = 0;
+                const intervalo = setInterval(() => {
+                    if (tiempoTranscurrido >= tiempoTotal) {
+                        clearInterval(intervalo);
+                        const velocidadImpacto = gravedad * tiempoTotal;
+                        resolve({
+                            tiempoTotal: tiempoTotal.toFixed(2),
+                            velocidadImpacto: velocidadImpacto.toFixed(2),
+                        });
+                    } else {
+                        const alturaActual = alturaInicial - 0.5 * gravedad * Math.pow(tiempoTranscurrido, 2);
+                        document.getElementById("resultado").innerHTML += 
+                            `Tiempo: ${tiempoTranscurrido.toFixed(2)} s - Altura: ${alturaActual.toFixed(2)} m<br>`;
+                        tiempoTranscurrido += 0.5; // Intervalo de 500 ms
+                    }
+                }, 500);
+            });
+        }
+
+        // Evento del botón
+        document.getElementById("iniciar").addEventListener("click", () => {
+            const alturaInicial = parseFloat(document.getElementById("altura").value);
+            document.getElementById("resultado").innerHTML = ""; // Limpiar resultados anteriores
+
+            if (isNaN(alturaInicial)) {
+                alert("Por favor, ingrese una altura válida.");
+                return;
+            }
+
+            caidaLibre(alturaInicial)
+                .then((resultado) => {
+                    document.getElementById("resultado").innerHTML += 
+                        `<br>El objeto tardó ${resultado.tiempoTotal} segundos en llegar al suelo.<br>
+                         Velocidad en el impacto: ${resultado.velocidadImpacto} m/s`;
+                })
+                .catch((error) => {
+                    document.getElementById("resultado").innerHTML = error;
+                });
+        });
+    </script>
+</body>
+</html>
