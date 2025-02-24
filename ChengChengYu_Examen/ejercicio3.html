@@ -1,0 +1,74 @@
+<!-- Ejercicio 3 -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de contacto</title>
+    <style>
+        /* Estilo por defecto para los campos */
+        input, button {
+            font-size: 16px;
+            padding: 10px;
+            margin: 10px 0;
+            border: 3px solid #cccccc;
+            border-radius: 5px;
+        }
+
+        /* Estilo para los campos con foco */
+        input:focus, button:focus {
+            border: 4px solid #4CAF50;
+            background-color: #f0f8f0;
+        }
+
+        /* Estilo adicional para el botón */
+        button {
+            font-weight: bold;
+        }
+
+        /* Estilo de los mensajes de error */
+        .error {
+            color: red;
+            font-size: 0.9em;
+        }
+
+        /* Estilo para el botón de enviar */
+        button {
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+    <h2>Formulario de Contacto</h2>
+
+    <form id="contactForm">
+        <label for="name">Nombre:</label>
+        <input type="text" id="name" name="name" required>
+        <span id="nameError" class="error"></span><br><br>
+
+        <label for="phone">Teléfono:</label>
+        <input type="text" id="phone" name="phone" required>
+        <span id="phoneError" class="error"></span><br><br>
+
+        <button type="submit" id="enviar">Enviar</button>
+    </form>
+
+    <script>
+        const formulario = document.getElementById('contactForm');
+        const nombre = document.getElementById('name');
+        const errorNombre = document.getElementById('nameError');
+        const telefono = document.getElementById('phone');
+        const errorTelefono = document.getElementById('phoneError');
+        const botonEnviar = document.getElementById('enviar');
+
+        nombre.addEventListener('click', () => {
+            formulario.style.backgroundColor='red';
+            return
+        });
+       
+
+
+    </script>
+</body>
+</html>

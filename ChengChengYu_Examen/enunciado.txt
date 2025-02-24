@@ -1,0 +1,219 @@
+<!-- Ejercicio 2 -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>promesa fetch array </title>
+</head>
+<body>
+<script>
+   
+    let urls1 = [
+      'https://api.github.com/users/iliakan',
+      'https://api.github.com/users/remy',
+      'https://api.github.com/users/jeresig',
+    ];
+ 
+
+</script>
+</body>
+</html>
+
+
+
+<!-- Ejercicio 3 -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de contacto</title>
+    <style>
+        /* Estilo por defecto para los campos */
+        input, button {
+            font-size: 16px;
+            padding: 10px;
+            margin: 10px 0;
+            border: 3px solid #cccccc;
+            border-radius: 5px;
+        }
+
+        /* Estilo para los campos con foco */
+        input:focus, button:focus {
+            border: 4px solid #4CAF50;
+            background-color: #f0f8f0;
+        }
+
+        /* Estilo adicional para el botón */
+        button {
+            font-weight: bold;
+        }
+
+        /* Estilo de los mensajes de error */
+        .error {
+            color: red;
+            font-size: 0.9em;
+        }
+
+        /* Estilo para el botón de enviar */
+        button {
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+    <h2>Formulario de Contacto</h2>
+
+    <form id="contactForm">
+        <label for="name">Nombre:</label>
+        <input type="text" id="name" name="name" required>
+        <span id="nameError" class="error"></span><br><br>
+
+        <label for="phone">Teléfono:</label>
+        <input type="text" id="phone" name="phone" required>
+        <span id="phoneError" class="error"></span><br><br>
+
+        <button type="submit">Enviar</button>
+    </form>
+
+    <script>
+       
+    </script>
+</body>
+</html>
+
+
+<!-- Ejercicio 4 -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>api_fetch</title>
+</head>
+<body>
+    <div id="datos_respuesta_fetch"></div>
+
+<script>
+    fetch('https://api.github.com/repos/javascript-tutorial/en.javascript.info/commits')
+   
+</script>
+</body>
+</html>
+
+
+
+<!-- Ejercicio 5 -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NASA Imagen del Día</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            text-align: center;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>NASA Imagen del Día</h1>
+    <div id="imagen-container">
+        <img id="imagen-del-dia" src="" alt="Imagen del día">
+        <p id="titulo"></p>
+        <p id="descripcion"></p>
+        <p id="fecha"></p>
+
+    </div>
+    <script>
+    
+    const apiKey = '9SoFntfrFmKj3tGNZNXa9m6xfrjKezyrJFnDBa7L';
+    
+     const fechas = [
+            "2024-01-01", "2024-01-15", "2024-02-01", "2024-02-14",
+            "2024-03-01", "2024-03-15", "2024-04-01", "2024-04-15",
+            "2024-05-01", "2024-05-15", "2024-06-01", "2024-06-15",
+            "2024-07-01", "2024-07-15", "2024-08-01", "2024-08-15",
+            "2024-09-01", "2024-09-15", "2024-10-01", "2024-10-15"
+        ];
+
+        const url = `https://api.nasa.gov/planetary/apod?api_key=${apiKey}&date=${fechas[i]}`;
+        
+</script>
+</body>
+</html>
+
+
+
+<!-- Ejercicio 6 -->
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora  IVA</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      line-height: 1.6;
+    }
+    label {
+      font-weight: bold;
+    }
+    input {
+      padding: 8px;
+      margin: 10px 0;
+      display: block;
+      width: 300px;
+      max-width: 100%;
+      font-size: 1em;
+    }
+    .output {
+      margin-top: 20px;
+      font-size: 1.2em;
+    }
+    .error {
+      color: red;
+      font-size: 0.9em;
+      height: 1.2em; /* Espacio fijo para evitar desplazamiento */
+      display: block; /* Asegura que ocupe espacio en el flujo */
+      margin-bottom: 5px; /* Espaciado inferior para separación */
+    }
+  </style>
+</head>
+<body>
+  <h1>Calculadora de Precio con IVA</h1>
+  <p>Ingresa el precio base de un producto para calcular su precio total con IVA.</p>
+
+  <form id="priceForm">
+    <!-- Campo para el precio base -->
+    <label for="price">Precio Base:</label>
+    <input type="text" id="price" placeholder="Ingresa el precio base">
+    <span class="error" id="priceError"></span>
+
+    <!-- Campo para el IVA -->
+    <label for="ivaRate">Tasa de IVA (%):</label>
+    <input type="text" id="ivaRate" placeholder="Ejemplo: 21.5" value="21">
+    <span class="error" id="ivaError"></span>
+  </form>
+
+  <!-- Resultado del cálculo -->
+  <div class="output" id="result">
+    <p><strong>Precio con IVA:</strong> $0.00</p>
+  </div>
+
+  <script>
+    
+
+    
+  </script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!-- Ejercicio 2 -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>promesa fetch array </title>
+</head>
+<body>
+    <div id="iliakan"></div>
+    <div id="remy"></div>
+    <div id="jeresig"></div>
+    <script>
+        let urls1 = [
+            'https://api.github.com/users/iliakan',
+            'https://api.github.com/users/remy',
+            'https://api.github.com/users/jeresig',
+        ];
+        
+        const urlsIliakan = urls1[0]; 
+        const urlsRemy = urls1[1];
+        const urlsJeresig = urls1[2];
+        const urlClima = 'https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current_weather=true';
+
+        const fetchData = () =>{
+            Promise.all([
+                fetch(urlsIliakan),
+                fetch(urlsRemy),
+                fetch(urlsJeresig),
+                //fetch(urlClima)
+            ])
+            .then(responses => {
+                const todosCorrectos = responses.every(response => response.ok);
+
+                if(todosCorrectos){
+                    return Promise.all(responses.map(response => response.json()));
+                } else {
+                    throw new Error('Algunas de las peticiones fallaron.');
+                }
+            })
+            .then(data => {
+                document.getElementById('iliakan').innerHTML = `<h3>Iliakan</h3><pre>${JSON.stringify(data[0], null, 2)}</pre>`;
+                document.getElementById('remy').innerHTML = `<h3>Remy</h3><pre>${JSON.stringify(data[1], null, 2)}</pre>`;
+                document.getElementById('jeresig').innerHTML = `<h3>Jeresig</h3><pre>${JSON.stringify(data[2], null, 2)}</pre>`;
+            })
+            .catch(error => {
+                document.body.innerHTML = `<h3>Error: ${error.message}</h3>`;
+            });
+        };
+        fetchData();
+    </script>
+</body>
+</html>
