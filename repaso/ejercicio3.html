@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de contacto</title>
+    <style>
+        /* Estilo por defecto para los campos */
+        input, button {
+            font-size: 16px;
+            padding: 10px;
+            margin: 10px 0;
+            border: 3px solid #cccccc;
+            border-radius: 5px;
+        }
+
+        /* Estilo para los campos con foco */
+        input:focus, button:focus {
+            border: 4px solid #4CAF50;
+            background-color: #f0f8f0;
+        }
+
+        /* Estilo adicional para el botón */
+        button {
+            font-weight: bold;
+        }
+
+        /* Estilo de los mensajes de error */
+        .error {
+            color: red;
+            font-size: 0.9em;
+        }
+
+        /* Estilo para el botón de enviar */
+        button {
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+    <h2>Formulario de Contacto</h2>
+
+    <form id="contactForm">
+        <label for="name">Nombre:</label>
+        <input type="text" id="name" name="name" required>
+        <span id="nameError" class="error"></span><br><br>
+
+        <label for="phone">Teléfono:</label>
+        <input type="text" id="phone" name="phone" required>
+        <span id="phoneError" class="error"></span><br><br>
+
+        <button type="submit">Enviar</button>
+    </form>
+
+    <script>
+        const form = document.getElementById('contactForm');
+        const nameInput = document.getElementById('name');
+        const phoneInput = document.getElementById('phone');
+        const nameError = document.getElementById('nameError');
+        const phoneError = document.getElementById('phoneError');
+
+        let contactos = [];
+
+        // Función para validar el nombre
+        function validateName(name) {
+            //const regex = /^[a-zA-Z]{5,}$/;
+            const regex = /^[a-zA-Z]{4,}\s[a-zA-Z]{4,}$/;
+            return regex.test(name);
+        }
+
+        // Función para validar el teléfono
+        function validatePhone(phone) {
+            const regex = /^\+34\d{9}$/;
+            return regex.test(phone);
+        }
+
+        // Evento focus en el campo de nombre
+        nameInput.addEventListener('focus', () => {
+            nameError.textContent = '';
+            nameInput.style.borderColor = '#4CAF50'; // Cambio de color del borde
+            nameInput.style.backgroundColor = '#f0f8f0'; // Cambio de fondo
+        });
+
+        // Evento blur en el campo de nombre
+        nameInput.addEventListener('blur', () => {
+            if (!validateName(nameInput.value)) {
+                nameError.textContent = 'El nombre debe tener al menos 4 caracteres, nombre + apellidos y solo contener letras.';
+            }
+            nameInput.style.borderColor = '#ccc'; // Restaurar color de borde
+            nameInput.style.backgroundColor = ''; // Restaurar fondo
+        });
+
+        // Evento focus en el campo de teléfono
+        phoneInput.addEventListener('focus', () => {
+            phoneError.textContent = '';
+            phoneInput.style.borderColor = '#4CAF50'; // Cambio de color del borde
+            phoneInput.style.backgroundColor = '#f0f8f0'; // Cambio de fondo
+        });
+
+        // Evento blur en el campo de teléfono
+        phoneInput.addEventListener('blur', () => {
+            if (!validatePhone(phoneInput.value)) {
+                phoneError.textContent = 'El teléfono debe tener el formato +34 seguido de 9 dígitos.';
+            }
+            phoneInput.style.borderColor = '#ccc'; // Restaurar color de borde
+            phoneInput.style.backgroundColor = ''; // Restaurar fondo
+        });
+
+        // Evento submit para procesar el formulario
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            const nameValue = nameInput.value;
+            const phoneValue = phoneInput.value;
+
+            // Validar que el nombre y el teléfono sean correctos
+            if (validateName(nameValue) && validatePhone(phoneValue)) {
+                // Almacenar los datos en el array
+                contactos.push({ name: nameValue, phone: phoneValue });
+
+                // Mostrar los contactos almacenados en la consola (o procesarlos como desees)
+                console.log(contactos);
+
+                // Limpiar los campos después de enviar
+                nameInput.value = '';
+                phoneInput.value = '';
+
+                alert('Formulario enviado correctamente');
+            } else {
+                alert('Por favor, corrija los errores antes de enviar el formulario.');
+            }
+        });
+    </script>
+</body>
+</html>
+

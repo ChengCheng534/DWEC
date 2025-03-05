@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NASA Imagen del Día</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            text-align: center;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>NASA Imagen del Día</h1>
+    <div id="imagen-container">
+        <img id="imagen-del-dia" src="" alt="Imagen del día">
+        <p id="titulo"></p>
+        <p id="descripcion"></p>
+        <p id="fecha"></p>
+
+    </div>
+    <script>
+    
+    const apiKey = '9SoFntfrFmKj3tGNZNXa9m6xfrjKezyrJFnDBa7L';
+    const imagenContainer = document.getElementById('imagen-container');
+    const imagenDelDia = document.getElementById('imagen-del-dia');
+    const descripcion = document.getElementById('descripcion');
+    const titulo = document.getElementById('titulo');
+    const imagenesArray = []; // Array para almacenar las imágenes
+    const fechaImagen = document.getElementById('fecha');
+
+    // Generar 20 fechas aleatorias del año 2024 y realizar las solicitudes
+    const solicitudes = [];
+     // Array manual con 20 fechas del año 2024
+     const fechas = [
+            "2024-01-01", "2024-01-15", "2024-02-01", "2024-02-14",
+            "2024-03-01", "2024-03-15", "2024-04-01", "2024-04-15",
+            "2024-05-01", "2024-05-15", "2024-06-01", "2024-06-15",
+            "2024-07-01", "2024-07-15", "2024-08-01", "2024-08-15",
+            "2024-09-01", "2024-09-15", "2024-10-01", "2024-10-15"
+        ];
+    for (let i = 0; i<20; i++) {
+
+        // Realizar la solicitud a la API de NASA
+        const url = `https://api.nasa.gov/planetary/apod?api_key=${apiKey}&date=${fechas[i]}`;
+        solicitudes.push(
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    // Almacenar la imagen y la descripción en el array
+                    imagenesArray.push({
+                        url: data.url,
+                        title: data.title,
+                        explanation: data.explanation,
+                        date:data.date,
+                    });
+                })
+                .catch(error => {
+                    console.error('Error al obtener la imagen:', error);
+                })
+        );
+    }
+
+    // Esperar a que todas las solicitudes terminen
+    Promise.all(solicitudes).then(() => {
+        // Mostrar las imágenes del array una por una cada 5 segundos
+        let indice = 0;
+        setInterval(() => {
+            if (indice < imagenesArray.length) {
+                const imagen = imagenesArray[indice];
+                imagenDelDia.src = imagen.url;
+                titulo.textContent = imagen.title;
+                descripcion.textContent = imagen.explanation;
+                fechaImagen.textContent=imagen.date;
+                indice++;
+            } else {
+                indice = 0; // Reiniciar para mostrar nuevamente desde el principio
+            }
+        }, 5000); // Intervalo de 5 segundos
+    });
+</script>
+</body>
+</html>

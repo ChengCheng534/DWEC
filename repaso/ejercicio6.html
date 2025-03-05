@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Precio con IVA</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      line-height: 1.6;
+    }
+    label {
+      font-weight: bold;
+    }
+    input {
+      padding: 8px;
+      margin: 10px 0;
+      display: block;
+      width: 300px;
+      max-width: 100%;
+      font-size: 1em;
+    }
+    .output {
+      margin-top: 20px;
+      font-size: 1.2em;
+    }
+    .error {
+      color: red;
+      font-size: 0.9em;
+      height: 1.2em; /* Espacio fijo para evitar desplazamiento */
+      display: block; /* Asegura que ocupe espacio en el flujo */
+      margin-bottom: 5px; /* Espaciado inferior para separación */
+    }
+  </style>
+</head>
+<body>
+  <h1>Calculadora de Precio con IVA</h1>
+  <p>Ingresa el precio base de un producto para calcular su precio total con IVA.</p>
+
+  <form id="priceForm">
+    <!-- Campo para el precio base -->
+    <label for="price">Precio Base:</label>
+    <input type="text" id="price" placeholder="Ingresa el precio base">
+    <span class="error" id="priceError"></span>
+
+    <!-- Campo para el IVA -->
+    <label for="ivaRate">Tasa de IVA (%):</label>
+    <input type="text" id="ivaRate" placeholder="Ejemplo: 21.5" value="21">
+    <span class="error" id="ivaError"></span>
+  </form>
+
+  <!-- Resultado del cálculo -->
+  <div class="output" id="result">
+    <p><strong>Precio con IVA:</strong> $0.00</p>
+  </div>
+
+  <script>
+    // Referencias a los elementos del DOM
+    const priceInput = document.getElementById('price');
+    const ivaInput = document.getElementById('ivaRate');
+    const resultDiv = document.getElementById('result');
+    const priceError = document.getElementById('priceError');
+    const ivaError = document.getElementById('ivaError');
+
+    // Función para validar si un valor es un número válido (puede ser decimal) y positivo
+    function validateDecimalInput(value) {
+      // Expresión regular para validar números decimales positivos
+      const decimalRegex = /^\d+(\.\d+)?$/;
+      return decimalRegex.test(value) && parseFloat(value) > 0;
+    }
+
+    // Función para calcular el precio con IVA
+    function calculatePriceWithIVA() {
+      const price = priceInput.value.trim();
+      const ivaRate = ivaInput.value.trim();
+
+      // Validación del precio base
+      if (!validateDecimalInput(price)) {
+        priceError.textContent = 'Por favor, ingresa un precio válido mayor que 0. Use solo números con decimales si es necesario.';
+        resultDiv.innerHTML = '<p><strong>Precio con IVA:</strong> $0.00</p>';
+        return;
+      } else {
+        priceError.textContent = '';
+      }
+
+      // Validación de la tasa de IVA
+      if (!validateDecimalInput(ivaRate)) {
+        ivaError.textContent = 'Por favor, ingresa una tasa de IVA válida mayor que 0. Use solo números con decimales si es necesario.';
+        resultDiv.innerHTML = '<p><strong>Precio con IVA:</strong> $0.00</p>';
+        return;
+      } else {
+        ivaError.textContent = '';
+      }
+
+      // Cálculo del precio con IVA
+      const priceValue = parseFloat(price);
+      const ivaRateValue = parseFloat(ivaRate);
+      const ivaAmount = (priceValue * ivaRateValue) / 100;
+      const totalPrice = priceValue + ivaAmount;
+
+      // Mostrar el resultado en la página
+      resultDiv.innerHTML = `
+        <p><strong>Precio Base:</strong> $${priceValue.toFixed(2)}</p>
+        <p><strong>IVA (${ivaRateValue}%):</strong> $${ivaAmount.toFixed(2)}</p>
+        <p><strong>Precio con IVA:</strong> $${totalPrice.toFixed(2)}</p>
+      `;
+    }
+
+    // Escuchar el evento input en los campos
+    priceInput.addEventListener('input', calculatePriceWithIVA);
+    ivaInput.addEventListener('input', calculatePriceWithIVA);
+  </script>
+</body>
+</html>
