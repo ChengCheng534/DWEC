@@ -37,4 +37,3 @@ el número mínimo de bolas es 1 y el máximo 90. */
 // Mostrar en pantalla las bolas en el bombo.
 // Mostrar en pantalla la cantidad de bolas extraídas.
 // Mostrar en pantalla las bolas extraídas.
-
