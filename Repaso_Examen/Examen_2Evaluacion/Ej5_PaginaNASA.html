@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NASA Imagen del Día</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            text-align: center;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>NASA Imagen del Día</h1>
+    <div id="imagen-container">
+        <img id="imagen-del-dia" src="" alt="Imagen del día">
+        <p id="titulo"></p>
+        <p id="descripcion"></p>
+        <p id="fecha"></p>
+    </div>
+
+    <script>
+        const apiKey = '9SoFntfrFmKj3tGNZNXa9m6xfrjKezyrJFnDBa7L';
+
+        const fechas = [
+            "2024-01-01", "2024-01-15", "2024-02-01", "2024-02-14",
+            "2024-03-01", "2024-03-15", "2024-04-01", "2024-04-15",
+            "2024-05-01", "2024-05-15", "2024-06-01", "2024-06-15",
+            "2024-07-01", "2024-07-15", "2024-08-01", "2024-08-15",
+            "2024-09-01", "2024-09-15", "2024-10-01", "2024-10-15"
+        ];
+
+        function actualizarImagen() {
+            const randomIndex = Math.floor(Math.random() * fechas.length);
+            const selectedDate = fechas[randomIndex];
+
+            const url = `https://api.nasa.gov/planetary/apod?api_key=${apiKey}&date=${selectedDate}`;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('imagen-del-dia').src = data.url;
+                    document.getElementById('imagen-del-dia').alt = data.title;
+                    document.getElementById('titulo').textContent = data.title;
+                    document.getElementById('descripcion').textContent = data.explanation;
+                    document.getElementById('fecha').textContent = `Fecha: ${data.date}`;
+                })
+                .catch(error => console.error('Error al obtener la imagen:', error));
+        }
+
+        // Actualizar la imagen e información cada 5 segundos (5000 milisegundos)
+        setInterval(actualizarImagen, 5000);
+
+        // Llamamos a la función una vez al cargar la página para mostrar la imagen inicial
+        actualizarImagen();
+    </script>
+</body>
+</html>
+

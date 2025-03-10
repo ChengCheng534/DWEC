@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Lectura de numero</title>
+</head>
+<body>
+    <div id="datos_respuesta_fetch"></div>
+
+<script>
+    fetch('https://api.github.com/repos/javascript-tutorial/en.javascript.info/commits')
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Error en la solicitud: ' + response.statusText);
+        }
+        console.log(response.status); // Status de la respuesta
+        return response.json(); // Asegúrate de devolver el JSON
+    })
+    .then(h => {
+        console.log("El tamaño de commits es = " + h.length);
+
+        // Crear un array para almacenar la información de los autores
+        let autores = [];
+
+        // Usar for-of para iterar sobre los commits
+        for (let commit of h) {
+            let autor = {
+                name: commit.commit.author.name,
+                email: commit.commit.author.email,
+                date: commit.commit.author.date
+            };
+            autores.push(autor);
+        }
+
+        // Filtrar los autores por fecha de junio de 2024
+        let autoresJunio2024 = autores.filter(autor => {
+            // Convertir la fecha a un objeto Date
+            let fecha = new Date(autor.date);
+            // Verificar si el año es 2024 y el mes es junio (mes 5, ya que enero es 0)
+            return fecha.getFullYear() === 2024 && fecha.getMonth() === 5;  // 5 corresponde a junio
+        });
+
+        // Mostrar el array filtrado de autores de junio 2024
+        console.log("Autores de junio 2024:", JSON.stringify(autoresJunio2024, null, 4));
+
+        // Mostrar los datos en la página
+        let datosJson = JSON.stringify(autoresJunio2024, null, 4); // Formato bonito para el JSON
+        let div = document.getElementById("datos_respuesta_fetch");
+        div.innerHTML = "<pre>" + datosJson + "</pre>"; // <pre> mantiene el formato bonito
+    })
+    .catch(error => {
+        console.error('Hubo un problema con la solicitud Fetch:', error);
+    });
+</script>
+</body>
+</html>
