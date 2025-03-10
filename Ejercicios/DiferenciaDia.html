@@ -16,13 +16,13 @@
 
         // Convertir la diferencia a días
         const milisegundosPorDia1 = 1000 * 60 * 60 * 24;
-        const diferenciaDias = diferenciaMilisegundos1 / milisegundosPorDia;
+        const diferenciaDias = diferenciaMilisegundos1 / milisegundosPorDia1;
 
         console.log(`La diferencia entre las fechas es de ${diferenciaDias} días.`);
 
         ////////////////////////////////////////////////////////////////////////////
         const fechaInicio = new Date("2024-12-01T12:00:00");
-        const fechaFin = new Date("2024-12-11T15:30:00");
+        const fechaFin = new Date("2024-12-21T15:30:00");
 
         // Obtener la diferencia en milisegundos
         const diferenciaMilisegundos = fechaFin - fechaInicio;
