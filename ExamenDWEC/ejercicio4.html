@@ -1,0 +1,38 @@
+<!-- EJERCICIO 4  examen ordinario convocatoria marzo-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lista de Tareas</title>
+</head>
+<body>
+  <h1> Lista de Actividades</h1>
+  <label for="tareaInput">Actividad:  </label>
+  <input type="text" id="tareaInput" placeholder="Escribe una actividad">
+  <button id="agregarBtn">Agregar actividad</button>
+  <ul id="listaTareas"></ul>
+
+  <script>
+        const actividad = document.getElementById('tareaInput');
+        const agregar = document.getElementById('agregarBtn');
+        const listaTareas = document.getElementById('listaTareas');
+
+          function guardarActividad(actividad) {
+            let actividades = JSON.parse(localStorage.getItem('actividades')) || [];
+            actividades.push({ nombre });
+            localStorage.setItem('actividades', JSON.stringify(actividades));
+          }
+
+          function mostrarActividades() {
+            let actividades = JSON.parse(localStorage.getItem('actividades')) || [];
+            if (actividades.length > 0) {
+              listaTareas.innerHTML = actividades.map(actividad => `<li>${actividad.nombre}</li>`).join('');
+            } else {
+              listaTareas.innerHTML = '<li>No hay actividad registrados.</li>';
+            }
+        }
+
+  </script>
+</body>
+</html>

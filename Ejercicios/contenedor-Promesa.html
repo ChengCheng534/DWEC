@@ -38,10 +38,12 @@
             }
         })
         .then(data => {
+            for (let index = 0; index < 30; index++) {
             // Mostrar los datos de cada respuesta en sus respectivos contenedores
             document.getElementById('usuarios').innerHTML = `<h3>Usuarios</h3><pre>${JSON.stringify(data[0], null, 2)}</pre>`;
             document.getElementById('productos').innerHTML = `<h3>Productos</h3><pre>${JSON.stringify(data[1], null, 2)}</pre>`;
             document.getElementById('clima').innerHTML = `<h3>Clima</h3><pre>${JSON.stringify(data[2], null, 2)}</pre>`;
+            }
         })
         .catch(error => {
             // Si alguna solicitud falla, mostramos el error

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Lectura de numero</title>
+    <style>
+        pre {
+            background-color: #f4f4f4;
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <h1>Respuesta en formato JSON ( Primera Lista con todos los commit.author)</h1>
+    <div id="response"></div> <!-- Aquí se mostrará la respuesta en formato JSON -->
+    <h1>Autores sin repetición de commit.author.name  (Segunda Lista procesada)</h1>
+    <div id="nombresSinRepetir"></div> <!-- Aquí se mostrará la lista de autores únicos -->
+
+<script>
+    fetch('https://api.github.com/repos/javascript-tutorial/en.javascript.info/commits')
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Error en el acceso a la url de la plataforma GITHUB');
+        }
+        console.log(response.status);
+        return response.json();
+    })
+    .then(h => {
+        console.log("El tamaño de commits es = " + h.length);
+
+        let autores = [];
+        let autoresNoRep = [];
+
+        for (let commit of h) {
+            let autor = {
+                name: commit.commit.author.name,
+                email: commit.commit.author.email,
+                date: commit.commit.author.date
+            };
+            autores.push(autor);
+        }
+
+        for (let commit of h) {
+            let autor = {
+                name: commit.commit.author.name,
+            };
+            autoresNoRep.push(autor);
+        }
+
+        // Mostrar los datos en la página
+        let datosJson = JSON.stringify(autores, null, 4);
+        let div = document.getElementById("response");
+        div.innerHTML = "<pre>" + datosJson + "</pre>";
+
+        let datosNoRepJson = JSON.stringify(autoresNoRep, null, 4);
+        let divNoRep = document.getElementById("nombresSinRepetir");
+        divNoRep.innerHTML = "<pre>" + datosNoRepJson + "</pre>";
+
+
+    })
+    .catch(error => {
+        console.error('Hubo un problema con la solicitud Fetch:', error);
+    });
+</script>
+</body>
+</html>

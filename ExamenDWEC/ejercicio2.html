@@ -1,0 +1,59 @@
+<!-- EJERCICIO 2  examen ordinario convocatoria marzo-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 2  sobre Array en JavaScript</title>
+</head>
+<body>
+    <h1>Ejercicio de Programación</h1>
+
+    <h3>Resultado en consola</h3>
+
+    <script>
+         // Arreglo de productos
+         const productos = [
+            { nombre: "Camiseta", precio: 15, categoria: "ropa" },
+            { nombre: "Pantalón", precio: 30, categoria: "ropa" },
+            { nombre: "Libro", precio: 10, categoria: "papelería" },
+            { nombre: "Lápiz", precio: 2, categoria: "papelería" },
+            { nombre: "Zapatos", precio: 50, categoria: "ropa" },
+            { nombre: "Cuaderno", precio: 3, categoria: "papelería" },
+            { nombre: "Mochila", precio: 20, categoria: "ropa" },
+            { nombre: "Ratón", precio: 12, categoria: "informática" },
+            { nombre: "Portátil", precio: 700, categoria: "informática" },
+            { nombre: "Abrigo", precio: 100, categoria: "ropa" },
+            { nombre: "Bufanda", precio: 35, categoria: "ropa" }
+        ];
+
+        console.log('Nombre de productos:');
+        for (let index = 0; index < productos.length; index++) {
+            const element = productos[index];
+            console.log('-'+productos[index]['nombre']);
+        }
+
+        console.log('Nombre de productos en mayúscula:');
+        for (let index = 0; index < productos.length; index++) {
+            const nombre = productos[index]['nombre']
+            productos[index]['nombre']= nombre.toLocaleUpperCase();
+            console.log(productos[index]);
+        }
+
+        console.log('Categoría de productos:');
+        for (let index = 0; index < productos.length; index++) {
+            const categoria = productos[index]['categoria'];
+            //console.log('-'+productos[index]['categoria']);
+            const categorias = new Set();
+            categorias.add(categoria);
+            console.log(categorias)
+        }
+
+        console.log('Precio descuante de productos:');
+        for (let index = 0; index < productos.length; index++) {
+            productos[index]['precio']= productos[index]['precio']*0.9;
+            console.log(productos[index]);
+        }
+    </script>
+</body>
+</html>

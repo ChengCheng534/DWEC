@@ -1,0 +1,44 @@
+<!-- EJERCICIO 3  examen ordinario convocatoria marzo-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio: Moda de Números Aleatorios</title>
+</head>
+<body>
+    <h1>Calcular la Moda de un Conjunto de Números Aleatorios (1-30)</h1>
+
+    <script>
+        const frecuencias = {
+            1: 0, 2: 0, 3: 0, 4: 0, 5: 0,
+            6: 0, 7: 0, 8: 0, 9: 0, 10: 0,
+            11: 0, 12: 0, 13: 0, 14: 0, 15: 0,
+            16: 0, 17: 0, 18: 0, 19: 0, 20: 0,
+            21: 0, 22: 0, 23: 0, 24: 0, 25: 0,
+            26: 0, 27: 0, 28: 0, 29: 0, 30: 0,
+        };
+        console.log('Numeros aleatorios:');
+        for (let i = 0; i < 100; i++) {
+            const numeroAleatorio = Math.floor(Math.random() * 30) + 1;
+            console.log(numeroAleatorio);
+            // Incrementamos la frecuencia del número
+            frecuencias[numeroAleatorio]++;
+            
+        }
+
+        console.log('Moda del número:');
+        for (const numero in frecuencias) {
+            const frecuencia = frecuencias[numero];
+            //console.log('Numero: '+numero+', Frecuencia: '+frecuencia);
+        }
+
+        console.log('Numeros con su frecuancias:');
+        for (const numero in frecuencias) {
+            const frecuencia = frecuencias[numero];
+            console.log('Numero: '+numero+', Frecuencia: '+frecuencia);
+        }
+        
+    </script>
+</body>
+</html>

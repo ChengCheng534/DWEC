@@ -30,7 +30,7 @@
             ])
             .then(responses => {
                 const todosCorrectos = responses.every(response => response.ok);
-
+                
                 if(todosCorrectos){
                     return Promise.all(responses.map(response => response.json()));
                 } else {

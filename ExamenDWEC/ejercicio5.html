@@ -1,0 +1,62 @@
+<!-- EJERCICIO 5  examen ordinario convocatoria marzo-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Lectura de commits en JSON</title>
+    <style>
+        pre {
+            background-color: #f4f4f4;
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <h1>Respuesta en formato JSON ( Primera Lista con todos los commit.author)</h1>
+    <div id="response"></div> <!-- Aquí se mostrará la respuesta en formato JSON -->
+    <h1>Autores sin repetición de commit.author.name  (Segunda Lista procesada)</h1>
+    <div id="nombresSinRepetir"></div> <!-- Aquí se mostrará la lista de autores únicos -->
+
+<script>
+    //URL de acceso a la plataforma GitHub  https://api.github.com/repos/javascript-tutorial/en.javascript.info/commits
+        let urls = [
+            'https://api.github.com/repos/javascript-tutorial/en.javascript.info/commits'
+        ]
+    
+        function fetchAllUrls(urls) {
+            return Promise.all(urls.map(url => fetch(url)))
+                .then(responses => {
+                    const todosCorrectos = responses.every(response => response.ok);
+
+                    if(todosCorrectos){
+                        return Promise.all(responses.map(response => response.json()));
+                    } else {
+                        throw new Error("Todas las solicitudes fueron exitosas");
+                    }
+                })
+                .then(data => {
+                    // Mostrar los datos de cada respuesta en sus respectivos contenedores
+                    for (let index = 0; index < 30; index++) {
+                        console.log(index);
+                        //document.getElementById('response').innerHTML = `<pre>${JSON.stringify(data[0][null]['commit'],null, 2)}</pre>`;
+                        document.getElementById('response').innerHTML = `<pre>${JSON.stringify(data[0][1],null, 2)}</pre>`;
+                        document.getElementById('nombresSinRepetir').innerHTML = `<pre>${JSON.stringify(data[0][index]['commit']['author'],null, 2)}</pre>`;
+                    }
+                })
+                .catch(() => {
+                    throw new Error("Error en el acceso a la url de la plataforma GITHUB");
+                });
+        }
+    
+        fetchAllUrls(urls)
+            .then(console.log) // En caso de éxito
+            .catch(console.error); // En caso de error
+
+</script>
+</body>
+</html>

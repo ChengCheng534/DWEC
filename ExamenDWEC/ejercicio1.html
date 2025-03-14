@@ -1,0 +1,66 @@
+<!-- EJERCICIO 1  examen ordinario convocatoria marzo-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 1 </title>
+</head>
+<body>
+
+<h2>Resultado de los Estudiantes</h2>
+<div id="resultado"></div> <!-- Aquí se mostrará el resultado -->
+
+<script>
+    // Array de estudiantes
+    const estudiantes = [
+        { nombre: "Juan", edad: 18, notaFinal: 9.5 },
+        { nombre: "Ana", edad: 20, notaFinal: 6.0 },
+        { nombre: "Carlos", edad: 22, notaFinal: 8.3 },
+        { nombre: "Marta", edad: 19, notaFinal: 7.8 },
+        { nombre: "Luis", edad: 21, notaFinal: 4.5 },
+        { nombre: "Laura", edad: 23, notaFinal: 9.0 },
+        { nombre: "Pepe", edad: 19, notaFinal: 7.5 },
+        { nombre: "Pepote", edad: 22, notaFinal: 6.0 },
+        { nombre: "Alvaro", edad: 24, notaFinal: 6.3 },
+        { nombre: "María", edad: 26, notaFinal: 7.1 },
+        { nombre: "Luisa", edad: 25, notaFinal: 3.5 },
+        { nombre: "Carmen", edad: 23, notaFinal: 6.0 }
+    ];
+
+    function notaFinal(estudiantes){
+        console.log('Alumnos con nota mayor que 7:');
+        for (let index = 0; index < estudiantes.length; index++) {
+            const notaFinal = estudiantes[index]['notaFinal'];
+            const notaMayor = 7;
+            if (notaFinal>=notaMayor) {
+                delete notaFinal;
+                console.log(estudiantes[index]);
+            }
+        }
+    }
+
+    function ordenarPorNota(estudiantes){
+        console.log('Ordenado por alumnos con mejor nota:');
+        const notaOrdenados = [...estudiantes].sort((a, b) => a.notaFinal - b.notaFinal);
+        console.log(notaOrdenados);
+    }
+
+    function datosAlumnos(estudiantes){
+        console.log('Nombre y nota:');
+
+        for (let index = 0; index < estudiantes.length; index++) {
+            const notaFinal = estudiantes[index]['notaFinal'];
+            delete notaFinal;
+            console.log(estudiantes[index]['notaFinal']);
+        }
+        
+    }
+
+    notaFinal(estudiantes);
+    ordenarPorNota(estudiantes);
+    datosAlumnos(estudiantes);
+
+</script>
+
+</body>
+</html>
