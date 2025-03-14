@@ -1,9 +1,8 @@
-<!-- EJERCICIO 5  examen ordinario convocatoria marzo-->
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Lectura de commits en JSON</title>
+    <title>Lectura de numero</title>
     <style>
         pre {
             background-color: #f4f4f4;
@@ -23,40 +22,50 @@
     <div id="nombresSinRepetir"></div> <!-- Aquí se mostrará la lista de autores únicos -->
 
 <script>
-    //URL de acceso a la plataforma GitHub  https://api.github.com/repos/javascript-tutorial/en.javascript.info/commits
-        let urls = [
-            'https://api.github.com/repos/javascript-tutorial/en.javascript.info/commits'
-        ]
-    
-        function fetchAllUrls(urls) {
-            return Promise.all(urls.map(url => fetch(url)))
-                .then(responses => {
-                    const todosCorrectos = responses.every(response => response.ok);
-
-                    if(todosCorrectos){
-                        return Promise.all(responses.map(response => response.json()));
-                    } else {
-                        throw new Error("Todas las solicitudes fueron exitosas");
-                    }
-                })
-                .then(data => {
-                    // Mostrar los datos de cada respuesta en sus respectivos contenedores
-                    for (let index = 0; index < 30; index++) {
-                        console.log(index);
-                        //document.getElementById('response').innerHTML = `<pre>${JSON.stringify(data[0][null]['commit'],null, 2)}</pre>`;
-                        document.getElementById('response').innerHTML = `<pre>${JSON.stringify(data[0][1],null, 2)}</pre>`;
-                        document.getElementById('nombresSinRepetir').innerHTML = `<pre>${JSON.stringify(data[0][index]['commit']['author'],null, 2)}</pre>`;
-                    }
-                })
-                .catch(() => {
-                    throw new Error("Error en el acceso a la url de la plataforma GITHUB");
-                });
+    fetch('https://api.github.com/repos/javascript-tutorial/en.javascript.info/commits')
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Error en el acceso a la url de la plataforma GITHUB');
         }
-    
-        fetchAllUrls(urls)
-            .then(console.log) // En caso de éxito
-            .catch(console.error); // En caso de error
+        console.log(response.status);
+        return response.json();
+    })
+    .then(h => {
+        console.log("El tamaño de commits es = " + h.length);
 
+        let autores = [];
+        let autoresNoRep = [];
+
+        for (let commit of h) {
+            let autor = {
+                name: commit.commit.author.name,
+                email: commit.commit.author.email,
+                date: commit.commit.author.date
+            };
+            autores.push(autor);
+        }
+
+        for (let commit of h) {
+            let autor = {
+                name: commit.commit.author.name,
+            };
+            autoresNoRep.push(autor);
+        }
+
+        // Mostrar los datos en la página
+        let datosJson = JSON.stringify(autores, null, 4);
+        let div = document.getElementById("response");
+        div.innerHTML = "<pre>" + datosJson + "</pre>";
+
+        let datosNoRepJson = JSON.stringify(autoresNoRep, null, 4);
+        let divNoRep = document.getElementById("nombresSinRepetir");
+        divNoRep.innerHTML = "<pre>" + datosNoRepJson + "</pre>";
+
+
+    })
+    .catch(error => {
+        console.error('Hubo un problema con la solicitud Fetch:', error);
+    });
 </script>
 </body>
 </html>
